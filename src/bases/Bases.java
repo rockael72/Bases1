@@ -39,6 +39,7 @@ public class Bases {
      p.setVisible(true);  
      p.setLocationRelativeTo(null);
     
+     //Hola mundo
      
 
     }
