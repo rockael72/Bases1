@@ -57,8 +57,7 @@ public class Login extends javax.swing.JFrame {
         setUndecorated(true);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(224, 224, 224));
-        jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel1.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(4, 2, 2));
@@ -127,7 +126,7 @@ public class Login extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -160,14 +159,23 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         if (this.jTextField1.getText().isEmpty()||this.jPasswordField1.getText().isEmpty()){
-            System.out.println("debe ingresar usuario y contraseña");
+           JOptionPane.showMessageDialog(this,
+               "usuario o Contraseña invalidos",
+               "Error",
+                JOptionPane.ERROR_MESSAGE);
         }else{
            Usuario usuario = new Usuario();
+           String usr = this.jTextField1.getText();
+           String pss = this.jPasswordField1.getText();
            boolean existe = usuario.getSesion(this.jTextField1.getText(), this.jPasswordField1.getText());
            if(existe){
-               usuario.setHistorial(usuario.getId(this.jTextField1.getText()));
+               
+               int id = usuario.getId(usr, this.jPasswordField1.getText());
+               System.out.println("esto es id "+id);
+               usuario.setHistorial(id);
                this.dispose();
-                Principal p= new Principal();
+               
+                Principal p= new Principal(id, this.jTextField1.getText());
                 p.setVisible(true);
            }else{
                 JOptionPane.showMessageDialog(this,

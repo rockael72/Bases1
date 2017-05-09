@@ -18,16 +18,17 @@ import java.sql.Statement;
 public class Conexion {
 
     private static Connection conexion = null;
-    private String url = "jdbc:mysql://localhost:3306/bdAlquiler";
-    private String pass = "ServifiestasEstuardO";
-    private String usr = "Alquiler";
+    private String url = "jdbc:mysql://localhost:3306/bdAlquiler2";
+    //private String pass = "ServifiestasEstuardO";
+    private String pass = "Daniel16";
+    private String usr = "root";
+    //private String usr = "Alquiler";
 
     public Connection conexion() {
         System.out.println("hola");
         try {
             Class.forName("com.mysql.jdbc.Driver");
             this.conexion = (Connection) DriverManager.getConnection(url, usr, pass);
-            System.out.println("conectado2");
         } catch (ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
         } catch (SQLException sqle) {

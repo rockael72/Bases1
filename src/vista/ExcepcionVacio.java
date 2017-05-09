@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelo;
+package vista;
 
 /**
  *
  * @author arch
  */
-public class Color {
+public class ExcepcionVacio extends Exception{
     
+    public ExcepcionVacio(String msg){
+        super (msg);
+    }
 }

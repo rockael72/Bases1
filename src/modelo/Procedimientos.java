@@ -6,21 +6,25 @@
 package modelo;
 
 import controlador.Conexion;
+import java.sql.ResultSet;
 
 /**
  *
  * @author arch
  */
-public class DetalleCompras {
+public class Procedimientos {
     private Conexion conexion;
     
-    public DetalleCompras(){
+    public Procedimientos(){
         this.conexion = new Conexion();
         this.conexion.conexion();
     }
     
-    public void insertar(int idm, int idc, int cantidad, float precio){
-        this.conexion.ejecutar("insert into tblDetalleCompra (tblMercaderia_id,tblCompras_id,Cantidad,PrecioCompra) "
-                + "values ("+idm+","+idc+","+cantidad+","+precio+")");
+    public ResultSet getProcedimiento(String nombreProcedimiento){
+         ResultSet procedimiento = this.conexion.consulta
+                            ("call "+ nombreProcedimiento+"()");
+         return procedimiento;
     }
+    
+    
 }

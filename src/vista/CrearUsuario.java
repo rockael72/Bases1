@@ -49,9 +49,8 @@ public class CrearUsuario extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconImage(null);
-        setUndecorated(true);
 
-        jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.setBorder(null);
 
         jPanel4.setBackground(new java.awt.Color(226, 226, 226));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Nuevo Usuario"));

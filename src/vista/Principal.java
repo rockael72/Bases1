@@ -11,6 +11,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import javax.swing.JFrame;
+import modelo.Usuario;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
@@ -24,16 +25,26 @@ public class Principal extends javax.swing.JFrame {
     /**
      * Creates new form Principal
      */
-  
+    
     private PanelConsultas pc;
-    public Principal() {
+    private int idusr;
+    
+    public Principal(int id, String nombre) {
         initComponents();
+         String[] columnNames = {"id",
+                        "Nombre",
+                        "Usuario",
+                        "Contrasenia",
+                        "Administrador"};
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        Usuario us = new Usuario();
         this.pc= new PanelConsultas();
+        this.pc.generarTabla(us.usuario());
         this.jPanel2.setLayout(new BorderLayout());
         this.jPanel2.add(pc);
         this.pc.setVisible(true);
-        
+        this.jLabel3.setText("Usuario: "+nombre);
+        this.idusr=id;
     }
 
     /**
@@ -46,8 +57,6 @@ public class Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
         jButton3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         dateChooserCombo1 = new datechooser.beans.DateChooserCombo();
@@ -56,11 +65,11 @@ public class Principal extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         panelCurves1 = new org.edisoncor.gui.panel.PanelCurves();
         jPanel5 = new javax.swing.JPanel();
@@ -71,20 +80,18 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu6 = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
+        jMenuItem15 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem17 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
-        jMenu5 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -102,17 +109,6 @@ public class Principal extends javax.swing.JFrame {
         });
 
         jPanel1.setBorder(null);
-
-        jCheckBox1.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        jCheckBox1.setText("Alquiler");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
-
-        jCheckBox2.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        jCheckBox2.setText("Recoger Producto");
 
         jButton3.setBackground(new java.awt.Color(218, 218, 218));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/deshacer.png"))); // NOI18N
@@ -167,6 +163,7 @@ public class Principal extends javax.swing.JFrame {
                 false,
                 true)));
     dateChooserCombo1.setAutoScroll(false);
+    dateChooserCombo1.setCalendarBackground(new java.awt.Color(254, 254, 254));
     dateChooserCombo1.setWeekStyle(datechooser.view.WeekDaysStyle.SHORT);
     dateChooserCombo1.setFieldFont(new java.awt.Font("Comic Sans MS", java.awt.Font.PLAIN, 14));
 
@@ -193,6 +190,17 @@ public class Principal extends javax.swing.JFrame {
 
     jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+    jComboBox1.setBackground(new java.awt.Color(254, 254, 254));
+    jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pedidos", "Disponible" }));
+
+    jLabel2.setText("Mostrar");
+
+    jTextField1.setBackground(new java.awt.Color(254, 254, 254));
+    jTextField1.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+    jLabel1.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+    jLabel1.setText("Buscar");
+
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
     jPanel1Layout.setHorizontalGroup(
@@ -206,10 +214,14 @@ public class Principal extends javax.swing.JFrame {
             .addComponent(jButton1)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jButton3)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 368, Short.MAX_VALUE)
-            .addComponent(jCheckBox1)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jCheckBox2)
+            .addComponent(jLabel2)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel1)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -223,71 +235,33 @@ public class Principal extends javax.swing.JFrame {
     jPanel1Layout.setVerticalGroup(
         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addComponent(jSeparator1)
-        .addGroup(jPanel1Layout.createSequentialGroup()
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(dateChooserCombo1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addComponent(jSeparator2)
         .addGroup(jPanel1Layout.createSequentialGroup()
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jCheckBox1)
-                .addComponent(jCheckBox2))
-            .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dateChooserCombo1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
     jPanel2.setLayout(jPanel2Layout);
     jPanel2Layout.setHorizontalGroup(
         jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 0, Short.MAX_VALUE)
+        .addGap(0, 1005, Short.MAX_VALUE)
     );
     jPanel2Layout.setVerticalGroup(
         jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 500, Short.MAX_VALUE)
-    );
-
-    jPanel3.setBorder(null);
-
-    jLabel1.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-    jLabel1.setText("Buscar Cliente");
-
-    jTextField1.setText("jTextField1");
-
-    jButton4.setBackground(new java.awt.Color(86, 147, 255));
-    jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
-    jButton4.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jButton4ActionPerformed(evt);
-        }
-    });
-
-    javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-    jPanel3.setLayout(jPanel3Layout);
-    jPanel3Layout.setHorizontalGroup(
-        jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel1)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jButton4)
-            .addGap(36, 36, 36))
-    );
-    jPanel3Layout.setVerticalGroup(
-        jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(jPanel3Layout.createSequentialGroup()
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jButton4)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)))
-            .addGap(0, 0, Short.MAX_VALUE))
+        .addGap(0, 569, Short.MAX_VALUE)
     );
 
     jPanel4.setBackground(new java.awt.Color(86, 147, 255));
@@ -347,19 +321,30 @@ public class Principal extends javax.swing.JFrame {
 
     jMenuItem5.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
     jMenuItem5.setText("Nuevo Proveedor");
+    jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jMenuItem5ActionPerformed(evt);
+        }
+    });
     jMenu1.add(jMenuItem5);
 
     jMenuItem6.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
     jMenuItem6.setText("Nuevo Producto");
-    jMenu1.add(jMenuItem6);
-
-    jMenuItem13.setText("Compra");
-    jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+    jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jMenuItem13ActionPerformed(evt);
+            jMenuItem6ActionPerformed(evt);
         }
     });
-    jMenu1.add(jMenuItem13);
+    jMenu1.add(jMenuItem6);
+
+    jMenuItem7.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+    jMenuItem7.setText("Nueva Compra");
+    jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jMenuItem7ActionPerformed(evt);
+        }
+    });
+    jMenu1.add(jMenuItem7);
 
     jMenuBar1.add(jMenu1);
 
@@ -367,55 +352,46 @@ public class Principal extends javax.swing.JFrame {
     jMenu2.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
 
     jMenuItem3.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-    jMenuItem3.setText("Cliente");
+    jMenuItem3.setText("Usuario");
     jMenu2.add(jMenuItem3);
 
     jMenuItem4.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-    jMenuItem4.setText("Proveedor");
+    jMenuItem4.setText("Cliente");
     jMenu2.add(jMenuItem4);
 
-    jMenu6.setText("Producto");
-    jMenu6.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+    jMenuItem14.setText("Proveedor");
+    jMenu2.add(jMenuItem14);
 
-    jMenuItem7.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-    jMenuItem7.setText("Producto");
-    jMenu6.add(jMenuItem7);
+    jMenuItem15.setText("Producto");
+    jMenu2.add(jMenuItem15);
 
-    jMenuItem8.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-    jMenuItem8.setText("Categoría");
-    jMenu6.add(jMenuItem8);
-
-    jMenuItem9.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-    jMenuItem9.setText("Color");
-    jMenu6.add(jMenuItem9);
-
-    jMenuItem12.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-    jMenuItem12.setText("Material");
-    jMenu6.add(jMenuItem12);
-
-    jMenuItem10.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-    jMenuItem10.setText("Tamaño");
-    jMenu6.add(jMenuItem10);
-
-    jMenuItem11.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-    jMenuItem11.setText("Tipo");
-    jMenu6.add(jMenuItem11);
-
-    jMenu2.add(jMenu6);
+    jMenuItem16.setText("Caracteristica");
+    jMenu2.add(jMenuItem16);
 
     jMenuBar1.add(jMenu2);
 
-    jMenu3.setText("Consultas");
+    jMenu3.setText("Reservacion");
     jMenu3.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+    jMenuItem17.setText("Nueva Reservacion");
+    jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jMenuItem17ActionPerformed(evt);
+        }
+    });
+    jMenu3.add(jMenuItem17);
+
+    jMenuItem8.setText("Modificar Rerservacion");
+    jMenu3.add(jMenuItem8);
+
+    jMenuItem9.setText("Cancelar Reservacion");
+    jMenu3.add(jMenuItem9);
+
     jMenuBar1.add(jMenu3);
 
     jMenu4.setText("Reportes");
     jMenu4.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
     jMenuBar1.add(jMenu4);
-
-    jMenu5.setText("Configurar");
-    jMenu5.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-    jMenuBar1.add(jMenu5);
 
     setJMenuBar(jMenuBar1);
 
@@ -427,10 +403,9 @@ public class Principal extends javax.swing.JFrame {
             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -438,8 +413,6 @@ public class Principal extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -464,14 +437,6 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
-
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         System.exit(0);
@@ -493,13 +458,33 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-        new Cliente(this,true).setVisible(true);
+        PanelCliente p= new PanelCliente(this,true,"Nuevo Cliente");
+        p.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
-        new Compras(this,true).setVisible(true);
-    }//GEN-LAST:event_jMenuItem13ActionPerformed
+        new PanelProveedor(this,true, "Nuevo Proveedor").setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        // TODO add your handling code here:
+        PanelReservacion pr= new PanelReservacion(this,true);
+        pr.setUsr(this.idusr);
+        pr.setVisible(true);        
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        new PanelProducto(this,true).setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+        PanelCompras compras=new PanelCompras(this,true);
+        compras.idusr(this.idusr);
+        compras.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -531,7 +516,7 @@ public class Principal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Principal().setVisible(true);
+                new Principal(0,"").setVisible(true);
             }
         });
     }
@@ -541,25 +526,22 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -570,7 +552,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JSeparator jSeparator1;

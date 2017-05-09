@@ -13,29 +13,29 @@ import java.sql.SQLException;
  *
  * @author arch
  */
-public class Tipo {
-    private Conexion conexion;
+public class CColor {
+     private Conexion conexion;
     
-    public Tipo(){
+    public CColor(){
         this.conexion= new Conexion();
         this.conexion.conexion();
     }
     
-    public void setTipo(String tipo){
-         conexion.ejecutar("insert into tblTipo (Tipo) "+
-                     "values ('"+tipo+"')");
+    public void setColor(String Color){
+         conexion.ejecutar("insert into tblColor (Color) "+
+                     "values ('"+Color+"')");
     }
     
-    public ResultSet getTipo(int id){
-         ResultSet tipo = this.conexion.consulta("select Categoria from tblTipo "
+    public ResultSet getColor(int id){
+         ResultSet tipo = this.conexion.consulta("select Color from tblColor "
                 + "where id="+id+")");
          return tipo;
     }
     
-    public int getId(String tipo){
-         ResultSet id = this.conexion.consulta("select id from tblTipo "
-                + "where Tipo='"+tipo+"'");
-               int idc = -1;
+    public int getId(String color){
+         ResultSet id = this.conexion.consulta("select id from tblColor "
+                + "where Color='"+color+"'");
+         int idc = -1;
          try{
         while(id.next()){
             idc=Integer.valueOf(id.getString("id"));
@@ -46,9 +46,9 @@ public class Tipo {
          return idc;
     }
     
-    public ResultSet getAllTipo(){
-        ResultSet tblCategoria = this.conexion.consulta("select * from tblTipo");
-         return tblCategoria;
+    public ResultSet getTblColor(){
+        ResultSet tblColor = this.conexion.consulta("select * from tblColor");
+         return tblColor;
     }
     
     
