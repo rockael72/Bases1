@@ -648,8 +648,9 @@ private DetalleAlquiler dc;
             String mat = this.total2[4].toString();
             String col = this.total2[5].toString();
             String tam = this.total2[6].toString();            
-            float pc = Float.parseFloat(this.total2[7].toString());
-            int cant= Integer.parseInt(this.total2[8].toString());
+            int cant= Integer.parseInt(this.total2[7].toString());
+            float pc = Float.parseFloat(this.total2[10].toString());
+            
             idm = this.mercaderia.getId(nombre, c.getId(cat),t.getId(tip),m.getId(mat), co.getId(col), tm.getId(tam));            
             // inserta en tabla detalle id reservacion id mercaderia precio y cantidad            
             this.dc.insertar(idr, idm, pc, cant);
