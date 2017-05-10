@@ -14,7 +14,7 @@ import modelo.Usuario;
  */
 public class CrearUsuario extends javax.swing.JDialog {
 
-      
+      private Usuario usr;
     /**
      * Creates new form CrearUsuario
      */
@@ -22,6 +22,7 @@ public class CrearUsuario extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+        this.usr = new Usuario();
     }
 
     /**
@@ -48,12 +49,10 @@ public class CrearUsuario extends javax.swing.JDialog {
         jRadioButton1 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Usuario");
         setIconImage(null);
 
-        jPanel1.setBorder(null);
-
         jPanel4.setBackground(new java.awt.Color(226, 226, 226));
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Nuevo Usuario"));
 
         jLabel4.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         jLabel4.setText("Nombre Usuario");
@@ -79,7 +78,7 @@ public class CrearUsuario extends javax.swing.JDialog {
 
         jButton4.setBackground(new java.awt.Color(218, 218, 218));
         jButton4.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        jButton4.setText("Salir");
+        jButton4.setText("Regresar");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -93,44 +92,41 @@ public class CrearUsuario extends javax.swing.JDialog {
 
         jPasswordField2.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
 
+        jRadioButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jRadioButton1.setText("Administrador");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel7))
-                .addGap(33, 33, 33)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPasswordField1)
-                    .addComponent(jPasswordField2)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jButton4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)
-                        .addGap(125, 125, 125))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
-                        .addContainerGap())))
+                .addContainerGap(123, Short.MAX_VALUE)
+                .addComponent(jButton4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3)
+                .addGap(125, 125, 125))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jRadioButton1)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel7))
+                        .addGap(33, 33, 33)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jPasswordField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                            .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPasswordField2))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(82, 82, 82)
+                .addContainerGap(52, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -148,7 +144,7 @@ public class CrearUsuario extends javax.swing.JDialog {
                     .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jRadioButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addGap(44, 44, 44)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
                     .addComponent(jButton4))
@@ -159,11 +155,15 @@ public class CrearUsuario extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -182,6 +182,9 @@ public class CrearUsuario extends javax.swing.JDialog {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        String usrio=this.jTextField4.getText();
+        System.out.println("esto paso "+this.usr.getUsuario(usrio)+" y esto "+usrio.equals(this.usr.getUsuario(usrio)));
+        if(usrio.equals(this.usr.getUsuario(usrio))!=true){
         if (this.jTextField4.getText().isEmpty()||
                 this.jTextField5.getText().isEmpty()||
                 this.jPasswordField1.getText().isEmpty()||
@@ -193,7 +196,7 @@ public class CrearUsuario extends javax.swing.JDialog {
         }else if(this.jPasswordField1.getText().equals(this.jPasswordField2.getText())){
                  JOptionPane.showMessageDialog(this,
                 "Usuario creado correctamente.");
-                 Usuario usr = new Usuario();
+                 
                  usr.setUsuario(this.jTextField4.getText(), this.jTextField5.getText(),
                          this.jPasswordField1.getText(), this.jRadioButton1.isSelected());
                    System.out.println(this.jRadioButton1.isSelected());
@@ -208,6 +211,12 @@ public class CrearUsuario extends javax.swing.JDialog {
                "Error de Contraseña",
                 JOptionPane.ERROR_MESSAGE);
             }
+        }else{
+             JOptionPane.showMessageDialog(this,
+            "Nombre de usuario ya existe",
+            "Usuario",
+                JOptionPane.ERROR_MESSAGE);
+        }
                     
         //Usuario usr= new Usuario(this.jTextField4.getText(),this.jTextField5.getText(),this.jPasswordField1.getText(),this.jRadioButton1.isSelected());
     }//GEN-LAST:event_jButton3ActionPerformed

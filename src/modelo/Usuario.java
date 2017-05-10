@@ -47,8 +47,9 @@ public class Usuario {
         return existe;
     }
     
+    
     public String getUsuario(String Usuario){
-        ResultSet usr = this.conexion.consulta("select * from tblUsuario where Contrasenia=\""+Usuario+"\"");
+        ResultSet usr = this.conexion.consulta("select * from tblUsuario where Usuario=\""+Usuario+"\"");
         try{
             while(usr.next()){
             return usr.getString("Usuario");
@@ -82,7 +83,6 @@ public class Usuario {
         try{
             while(usr.next()){
                 id = Integer.valueOf(usr.getString("id"));
-                System.out.println(id);
         }
         }catch(SQLException e){
             System.out.println("error");
@@ -95,7 +95,70 @@ public class Usuario {
        return usr;
     }
     
+    public String getNombre(int id){
+        ResultSet nombre= this.conexion.consulta("select Nombre from tblUsuario where id = "+id+"");
+        String nmbr="";
+        try{
+            while(nombre.next()){
+            nmbr = nombre.getString("Nombre");
+            }
+        }catch(SQLException e){
+            
+        }
+        return nmbr;
+    }
     
+    public String getUsuario(int id){
+        ResultSet nombre= this.conexion.consulta("select Usuario from tblUsuario where id = "+id+"");
+        String nmbr="";
+        try{
+            while(nombre.next())
+                nmbr = nombre.getString("Usuario");
+        }catch(SQLException e){
+            
+        }
+        return nmbr;
+        
+    }
+    
+    public int getIdUsr(String usr){
+        ResultSet nombre= this.conexion.consulta("select id from tblUsuario where Usuario = '"+usr+"'");
+        int nmbr=0;
+        try{
+             while(nombre.next())
+            nmbr = Integer.valueOf(nombre.getString("id"));
+        }catch(SQLException e){
+            
+        }
+        return nmbr;
+    }
+    
+    public String getTipo(int id ){
+        ResultSet nombre= this.conexion.consulta("select Administrador from tblUsuario where id = '"+id+"'");
+        String nmbr="";
+        try{
+             while(nombre.next())
+            nmbr = nombre.getString("Administrador");
+        }catch(SQLException e){
+            
+        }
+        return nmbr;
+    }
+    
+    public void actualizar(int id, boolean tipo){
+        this.conexion.ejecutar("update tblUsuario set Administrador = "+tipo+" where id = "+id+"");        
+    }
 
+    public int total(){
+        ResultSet total=this.conexion.consulta("select count(*) as t from tblUsuario");
+        int t = 0;
+          try{
+             while(total.next())
+            t = Integer.valueOf(total.getString("t"));
+        }catch(SQLException e){
+            
+        }
+        return t;        
+    }
     
 }

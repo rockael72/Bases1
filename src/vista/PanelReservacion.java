@@ -212,6 +212,7 @@ private DetalleAlquiler dc;
 
         dateChooserCombo1.setAutoScroll(false);
         dateChooserCombo1.setCalendarBackground(new java.awt.Color(254, 254, 254));
+        dateChooserCombo1.setFormat(2);
         dateChooserCombo1.setWeekStyle(datechooser.view.WeekDaysStyle.SHORT);
         try {
             dateChooserCombo1.setDefaultPeriods(new datechooser.model.multiple.PeriodSet(new datechooser.model.multiple.Period(new java.util.GregorianCalendar(2017, 4, 4),
@@ -585,7 +586,7 @@ private DetalleAlquiler dc;
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private String girarFecha(String fecha){
-        String[] fecha2= {"","","20"};
+        String[] fecha2= {"","",""};
         int cont=0;
         for(int i=0;i<fecha.length(); i++){
         

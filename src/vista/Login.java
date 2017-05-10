@@ -8,6 +8,7 @@ package vista;
 import UpperEssential.UpperEssentialLookAndFeel;
 import controlador.Conexion;
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,7 +54,6 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
-        setLocation(new java.awt.Point(0, 0));
         setUndecorated(true);
         setResizable(false);
 
@@ -74,7 +74,6 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(218, 218, 218));
         jButton1.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jButton1.setText("Ingresar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -84,10 +83,14 @@ public class Login extends javax.swing.JFrame {
         });
 
         jPasswordField1.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPasswordField1KeyPressed(evt);
+            }
+        });
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/sidebar_usuario-corporativo.png"))); // NOI18N
 
-        jButton2.setBackground(new java.awt.Color(218, 218, 218));
         jButton2.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jButton2.setText("Cancelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -103,9 +106,6 @@ public class Login extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(jLabel3))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -118,7 +118,10 @@ public class Login extends javax.swing.JFrame {
                                 .addComponent(jButton1))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jPasswordField1, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(jLabel3)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -158,11 +161,33 @@ public class Login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         
-        if (this.jTextField1.getText().isEmpty()||this.jPasswordField1.getText().isEmpty()){
+   this.login();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){ 
+            this.login();
+        if(evt.getKeyCode() == KeyEvent.VK_ESCAPE)
+            System.exit(0);
+} 
+    }//GEN-LAST:event_jPasswordField1KeyPressed
+
+    private void login(){
+             if (this.jTextField1.getText().isEmpty()||this.jPasswordField1.getText().isEmpty()){
            JOptionPane.showMessageDialog(this,
                "usuario o Contraseña invalidos",
                "Error",
-                JOptionPane.ERROR_MESSAGE);
+                JOptionPane.ERROR_MESSAGE);           
         }else{
            Usuario usuario = new Usuario();
            String usr = this.jTextField1.getText();
@@ -182,21 +207,13 @@ public class Login extends javax.swing.JFrame {
                "usuario o Contraseña invalidos",
                "Error",
                 JOptionPane.ERROR_MESSAGE);
+                this.jPasswordField1.setText("");
            }
         
         }
         
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_jButton2ActionPerformed
-
+        
+    }
     /**
      * @param args the command line arguments
      */
