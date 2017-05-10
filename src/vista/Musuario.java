@@ -231,7 +231,10 @@ public class Musuario extends javax.swing.JDialog {
         // TODO add your handling code here:
         
         this.id=this.usr.getIdUsr(this.jTextField1.getText());
-        System.out.println(id);
+        if (this.id==0)
+             JOptionPane.showMessageDialog(this,
+                "Usuario no encontrado");                
+        else
         this.mostrar(id);
     }//GEN-LAST:event_jButton5ActionPerformed
 
