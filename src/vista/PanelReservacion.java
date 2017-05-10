@@ -373,7 +373,7 @@ private DetalleAlquiler dc;
         }
     });
 
-    jButton4.setText("Guardar");
+    jButton4.setText("Deposito");
     jButton4.setEnabled(false);
     jButton4.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -421,11 +421,11 @@ private DetalleAlquiler dc;
             .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel6)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGap(18, 18, 18)
             .addComponent(jLabel7)
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(20, 20, 20))
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -460,7 +460,7 @@ private DetalleAlquiler dc;
 
     private void detalleReservacion(){
      Object[] columnas = {"#","Nombre","Categoria",
-         "Tipo","Material","Color","Tamaño","Precio","Cantidad"};  
+         "Tipo","Material","Color","Tamaño","Cantidad","Precio"};  
      this.preservacion.crearColumnas(columnas);
      this.jPanel5.add(this.preservacion);
      this.preservacion.setVisible(true);
@@ -523,10 +523,11 @@ private DetalleAlquiler dc;
                 if(cantidad<=this.existencia){
                Object[] total = new Object[this.datos.length];               
                System.arraycopy(this.datos, 0,total, 0, this.datos.length);                                                              
-               total[7]=total[8];                              // canitdad = a precio
+               total[8]=total[10];
+               total[7]=cantidad;// canitdad = a precio
                total2 = new Object[this.datos.length];                                              
                System.arraycopy(total, 0,total2, 0, this.datos.length-1);                                                                                 
-               total2[this.datos.length-1]=cantidad;                          
+               //total2[this.datos.length-1]=cantidad;                          
                total2[0]=this.cont;
                 this.preservacion.insertarDatos(total2);
                 this.cont++;
@@ -551,7 +552,9 @@ private DetalleAlquiler dc;
         // TODO add your handling code here:
         if(this.pmercaderia.getSelect()!=null){
             this.datos = this.pmercaderia.getSelect();
-            this.existencia=Integer.valueOf(this.datos[7].toString());
+/*            for (int i=0;i < this.datos.length; i++)
+                System.out.println(" "+i+" "+this.datos[i]);*/
+            this.existencia=Integer.valueOf(this.datos[9].toString());
             
         }
     }//GEN-LAST:event_jPanel4MouseMoved
@@ -566,60 +569,19 @@ private DetalleAlquiler dc;
             int mat = this.m.getId(seleccion[4].toString());
             int col = this.co.getId(seleccion[5].toString());
             int tam = this.tm.getId(seleccion[6].toString());
-            float pc = Float.parseFloat(this.total2[7].toString());
-            int cant= Integer.parseInt(this.total2[8].toString());
+            int cant= Integer.parseInt(seleccion[7].toString());
+            float pc = Float.parseFloat(seleccion[8].toString());            
             int idm = this.mercaderia.getId(nombre, cat, tip, mat, col, tam);                     
         this.dc.eliminar(this.reservacion.getMaxid(), idm, pc,cant);
         this.preservacion.eliminar();
+         this.pmercaderia.generarTabla(this.mercaderia.getMercadriaP(this.jTextField3.getText()));            
+                this.pmercaderia.setVisible(true);
+        
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        
-        String fecha = this.dateChooserCombo1.getText();
-        String[] fecha2= {"","","20"};
-        int cont=0;
-        for(int i=0;i<fecha.length(); i++){
-        
-            if(fecha.charAt(i)!='/'){
-            fecha2[cont]+=fecha.charAt(i);
-            }else{
-                cont++;
-            }
-        }    
-        
-        fecha=fecha2[2]+"/"+fecha2[1]+"/"+fecha2[0];                
-        Reservacion reservacion= new Reservacion();
-        DetalleAlquiler dc= new DetalleAlquiler();
-        int idcliente = (this.cliente.getId(Integer.valueOf(this.pcliente.getFila(0, 4).toString())));
-        int index=this.jComboBox2.getSelectedIndex();
-        String ci = this.jComboBox2.getItemAt(index);       
-        reservacion.insertar(fecha, this.jTextField2.getText(), idcliente, this.ciudad.getId(ci),this.usr);
-        
-        int idr = reservacion.getMaxid();
-        Categoria c= new Categoria();
-        Tipo t = new Tipo();
-        Material m = new Material();
-        CColor co = new CColor();
-        Tamanio tm= new Tamanio();
-
-        int filas = this.preservacion.getCantidadFilas();
-        int columnas = this.preservacion.getCantidadColumnas();
-        int idm = 0;
-        float total=0;
-        for (int i=0;i<filas;i++){
-            String nombre = this.preservacion.getFila(i, 1).toString();
-            String cat = this.preservacion.getFila(i, 2).toString();
-            String tip = this.preservacion.getFila(i, 3).toString();
-            String mat = this.preservacion.getFila(i, 4).toString();
-            String col = this.preservacion.getFila(i, 5).toString();
-            String tam = this.preservacion.getFila(i, 6).toString();
-            int cant= Integer.valueOf(this.preservacion.getFila(i, 7).toString());
-            float pc = Float.valueOf(this.preservacion.getFila(i, 8).toString());
-            idm = this.mercaderia.getId(nombre, c.getId(cat),t.getId(tip),m.getId(mat), co.getId(col), tm.getId(tam));
-            dc.insertar(idr, idm, pc, cant);
-
-        }
+  
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private String girarFecha(String fecha){
@@ -648,8 +610,9 @@ private DetalleAlquiler dc;
             String mat = this.total2[4].toString();
             String col = this.total2[5].toString();
             String tam = this.total2[6].toString();            
-            float pc = Float.parseFloat(this.total2[7].toString());
-            int cant= Integer.parseInt(this.total2[8].toString());
+            int cant= Integer.parseInt(this.total2[7].toString());
+            float pc = Float.parseFloat(this.total2[8].toString());
+            System.out.println(cant + " "+ pc+" "+this.total2[8].toString()+" "+this.total2.length);
             idm = this.mercaderia.getId(nombre, c.getId(cat),t.getId(tip),m.getId(mat), co.getId(col), tm.getId(tam));            
             // inserta en tabla detalle id reservacion id mercaderia precio y cantidad            
             this.dc.insertar(idr, idm, pc, cant);
