@@ -60,6 +60,7 @@ UIManager.put("nimbusBlueGrey", new Color(214,217,223)); // barras de menu
    p.setVisible(true);  
     p.setLocationRelativeTo(null);
     
+     //Hola mundo
      
 
     }
