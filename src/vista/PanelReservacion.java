@@ -6,6 +6,8 @@
 package vista;
 
 import java.awt.BorderLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -85,8 +87,8 @@ private DetalleAlquiler dc;
        this.boxCiudad();
        this.detalleReservacion();
        this.cont=1;
-       this.usr=0;
-        
+       this.usr=0;        
+       this.selecPM();
     }
 
     /**
@@ -210,15 +212,56 @@ private DetalleAlquiler dc;
 
         jLabel3.setText("Ciudad");
 
-        dateChooserCombo1.setAutoScroll(false);
-        dateChooserCombo1.setCalendarBackground(new java.awt.Color(254, 254, 254));
-        dateChooserCombo1.setFormat(2);
-        dateChooserCombo1.setWeekStyle(datechooser.view.WeekDaysStyle.SHORT);
-        try {
-            dateChooserCombo1.setDefaultPeriods(new datechooser.model.multiple.PeriodSet(new datechooser.model.multiple.Period(new java.util.GregorianCalendar(2017, 4, 4),
-                new java.util.GregorianCalendar(2017, 4, 4))));
-    } catch (datechooser.model.exeptions.IncompatibleDataExeption e1) {
-        e1.printStackTrace();
+        dateChooserCombo1.setCurrentView(new datechooser.view.appearance.AppearancesList("Light",
+            new datechooser.view.appearance.ViewAppearance("custom",
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
+                    new java.awt.Color(0, 0, 0),
+                    new java.awt.Color(0, 0, 255),
+                    false,
+                    true,
+                    new datechooser.view.appearance.swing.ButtonPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
+                    new java.awt.Color(0, 0, 0),
+                    new java.awt.Color(0, 0, 255),
+                    true,
+                    true,
+                    new datechooser.view.appearance.swing.ButtonPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
+                    new java.awt.Color(0, 0, 255),
+                    new java.awt.Color(0, 0, 255),
+                    false,
+                    true,
+                    new datechooser.view.appearance.swing.ButtonPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
+                    new java.awt.Color(128, 128, 128),
+                    new java.awt.Color(0, 0, 255),
+                    false,
+                    true,
+                    new datechooser.view.appearance.swing.LabelPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
+                    new java.awt.Color(0, 0, 0),
+                    new java.awt.Color(0, 0, 255),
+                    false,
+                    true,
+                    new datechooser.view.appearance.swing.LabelPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
+                    new java.awt.Color(0, 0, 0),
+                    new java.awt.Color(255, 0, 0),
+                    false,
+                    false,
+                    new datechooser.view.appearance.swing.ButtonPainter()),
+                (datechooser.view.BackRenderer)null,
+                false,
+                true)));
+    dateChooserCombo1.setAutoScroll(false);
+    dateChooserCombo1.setCalendarBackground(new java.awt.Color(254, 254, 254));
+    dateChooserCombo1.setFormat(2);
+    dateChooserCombo1.setWeekStyle(datechooser.view.WeekDaysStyle.SHORT);
+    try {
+        dateChooserCombo1.setDefaultPeriods(new datechooser.model.multiple.PeriodSet(new datechooser.model.multiple.Period(new java.util.GregorianCalendar(2017, 4, 4),
+            new java.util.GregorianCalendar(2017, 4, 4))));
+} catch (datechooser.model.exeptions.IncompatibleDataExeption e1) {
+    e1.printStackTrace();
     }
     dateChooserCombo1.setFieldFont(new java.awt.Font("Comic Sans MS", java.awt.Font.PLAIN, 14));
 
@@ -236,19 +279,23 @@ private DetalleAlquiler dc;
         .addGroup(jPanel3Layout.createSequentialGroup()
             .addContainerGap()
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jLabel2)
-                .addComponent(jLabel3)
-                .addComponent(jLabel1))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton6))
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel1))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                            .addComponent(jButton6))
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, Short.MAX_VALUE))))
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addComponent(jLabel3)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addContainerGap())
     );
@@ -264,11 +311,11 @@ private DetalleAlquiler dc;
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGap(18, 18, 18)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel1)
                         .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -280,13 +327,17 @@ private DetalleAlquiler dc;
     jLabel4.setText("Buscar");
 
     jButton3.setText("Buscar");
+    jButton3.setEnabled(false);
     jButton3.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             jButton3ActionPerformed(evt);
         }
     });
 
+    jTextField3.setEditable(false);
+
     jButton7.setText("Agregar");
+    jButton7.setEnabled(false);
     jButton7.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             jButton7ActionPerformed(evt);
@@ -294,6 +345,8 @@ private DetalleAlquiler dc;
     });
 
     jLabel5.setText("Cantidad");
+
+    jTextField4.setEditable(false);
 
     javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
     jPanel7.setLayout(jPanel7Layout);
@@ -347,7 +400,7 @@ private DetalleAlquiler dc;
     jPanel4.setLayout(jPanel4Layout);
     jPanel4Layout.setHorizontalGroup(
         jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 389, Short.MAX_VALUE)
+        .addGap(0, 0, Short.MAX_VALUE)
     );
     jPanel4Layout.setVerticalGroup(
         jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -364,10 +417,11 @@ private DetalleAlquiler dc;
     );
     jPanel5Layout.setVerticalGroup(
         jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 116, Short.MAX_VALUE)
+        .addGap(0, 123, Short.MAX_VALUE)
     );
 
     jButton8.setText("Eliminar");
+    jButton8.setEnabled(false);
     jButton8.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             jButton8ActionPerformed(evt);
@@ -390,11 +444,20 @@ private DetalleAlquiler dc;
     });
 
     jButton9.setText("Nuevo");
+    jButton9.setEnabled(false);
 
-    jButton10.setText("Salir");
+    jButton10.setText("Guardar");
+    jButton10.setEnabled(false);
+    jButton10.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton10ActionPerformed(evt);
+        }
+    });
 
+    jLabel6.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
     jLabel6.setText("Total");
 
+    jLabel7.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
     jLabel7.setText("jLabel7");
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -413,16 +476,16 @@ private DetalleAlquiler dc;
         .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
             .addContainerGap()
+            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
             .addComponent(jLabel6)
             .addGap(18, 18, 18)
             .addComponent(jLabel7)
@@ -436,8 +499,8 @@ private DetalleAlquiler dc;
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -459,6 +522,71 @@ private DetalleAlquiler dc;
     pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    private void selecPM(){
+        this.pmercaderia.jTable1.addMouseListener(new MouseListener(){
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                        if(pmercaderia.getSelect()!=null){
+            datos = pmercaderia.getSelect();
+            existencia=Integer.valueOf(datos[9].toString());       
+            System.out.println(existencia+"esto hay");
+        }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent me) {
+                  if(pmercaderia.getSelect()!=null){
+            datos = pmercaderia.getSelect();
+            existencia=Integer.valueOf(datos[9].toString());    
+            }}
+
+            @Override
+            public void mouseReleased(MouseEvent me) {
+                
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent me) {
+                
+            }
+
+            @Override
+            public void mouseExited(MouseEvent me) {
+                
+            }
+        });
+}
+ 
+    
+    private void selectPD(){
+        this.preservacion.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                
+            }
+
+            @Override
+            public void mousePressed(MouseEvent me) {
+                
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent me) {
+                
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent me) {
+                
+            }
+
+            @Override
+            public void mouseExited(MouseEvent me) {
+                
+            }
+        });
+    }
     private void detalleReservacion(){
      Object[] columnas = {"#","Nombre","Categoria",
          "Tipo","Material","Color","Tamaño","Cantidad","Precio"};  
@@ -551,19 +679,12 @@ private DetalleAlquiler dc;
 
     private void jPanel4MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseMoved
         // TODO add your handling code here:
-        if(this.pmercaderia.getSelect()!=null){
-            this.datos = this.pmercaderia.getSelect();
-/*            for (int i=0;i < this.datos.length; i++)
-                System.out.println(" "+i+" "+this.datos[i]);*/
-            this.existencia=Integer.valueOf(this.datos[9].toString());
-            
-        }
+
     }//GEN-LAST:event_jPanel4MouseMoved
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
-        Object[] seleccion=this.preservacion.getSelect();
-
+        Object[] seleccion=this.preservacion.getSelect();        
             String nombre = seleccion[1].toString();
             int cat = this.c.getId(seleccion[2].toString());
             int tip = this.t.getId(seleccion[3].toString());
@@ -657,15 +778,32 @@ private DetalleAlquiler dc;
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+        this.jTextField1.setEditable(false);
+        this.jTextField2.setEditable(false);
+        this.jComboBox2.setEnabled(false);
+        this.dateChooserCombo1.setEnabled(false);
+        this.jComboBox1.setEnabled(false);
+        this.jButton1.setEnabled(false);
+        this.jButton2.setEnabled(false);
+        this.jButton6.setEnabled(false);
+        
+        this.jTextField3.setEditable(true);
+        this.jTextField4.setEditable(true);
+        this.jButton3.setEnabled(true);
+        this.jButton7.setEnabled(true);
          String fecha = this.girarFecha(this.dateChooserCombo1.getText());                                              
        
        int idcliente = (this.cliente.getId(Integer.valueOf(this.pcliente.getFila(0, 4).toString()))); //busca por DPI
          
       int index=this.jComboBox2.getSelectedIndex();
         String ci = this.jComboBox2.getItemAt(index);       
-        this.reservacion.insertar(fecha, this.jTextField2.getText(), idcliente, this.ciudad.getId(ci),this.usr);    
+        this.reservacion.insertar(fecha, this.jTextField2.getText(), idcliente, this.ciudad.getId(ci),this.usr);   
         
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton10ActionPerformed
 
         private String mostarMensaje(String mensaje){
         String name = JOptionPane.showInputDialog(this.parent, "Ingese "+mensaje);
