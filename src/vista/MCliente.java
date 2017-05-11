@@ -5,6 +5,9 @@
  */
 package vista;
 
+import javax.swing.JOptionPane;
+import modelo.Cliente;
+
 /**
  *
  * @author Danny10
@@ -14,11 +17,59 @@ public class MCliente extends javax.swing.JDialog {
     /**
      * Creates new form MCliente
      */
+ 
+    private String nomCliente;
+    private Cliente cliente;
+    private java.awt.Frame parent;
+    private boolean editar;
+    private boolean mensaje;
+    private int id;
+    private int total;
     public MCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+            this.setLocationRelativeTo(null);
+        this.nomCliente="";
+        this.cliente= new Cliente();        
+        this.parent=parent;
+        this.editar=false;
+        this.mensaje=true;
+        this.total=this.cliente.total();
+        this.id=1;
+        this.iniciar(id);
     }
-
+    
+    private void iniciar(int id){        
+        this.jTextField1.setText(this.cliente.getNombreC(id));
+        this.jTextField2.setText(this.cliente.getApellidoC(id));
+        this.jTextField3.setText(this.cliente.getDireccionC(id));
+        this.jTextField4.setText(this.cliente.getCorreoC(id));
+        this.jTextField5.setText(String.valueOf(this.cliente.getDPIC(id)));
+        this.jTextField6.setText(String.valueOf(this.cliente.getNitC(id)));       
+    }
+    
+     private boolean verficarJtext(){
+        boolean verificar = false;
+        String aux = jTextField1.getText().trim(); 
+        if (aux.length() == 0)
+            verificar = true;
+        aux = jTextField2.getText().trim(); 
+        if (aux.length() == 0)
+            verificar = true;
+        aux = jTextField3.getText().trim(); 
+        if (aux.length() == 0)
+            verificar = true;
+        aux = jTextField4.getText().trim(); 
+        if (aux.length() == 0)
+            verificar = true;
+        aux = jTextField5.getText().trim(); 
+        if (aux.length() == 0)
+            verificar = true;
+        aux = jTextField6.getText().trim(); 
+        if (aux.length() == 0)
+            verificar = true;        
+        return verificar;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,7 +94,6 @@ public class MCliente extends javax.swing.JDialog {
         jTextField6 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jTextField7 = new javax.swing.JTextField();
@@ -52,6 +102,7 @@ public class MCliente extends javax.swing.JDialog {
         jButton8 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Modificar Cliente");
 
         jPanel1.setBackground(new java.awt.Color(226, 226, 226));
 
@@ -92,7 +143,7 @@ public class MCliente extends javax.swing.JDialog {
 
         jButton1.setBackground(new java.awt.Color(218, 218, 218));
         jButton1.setFont(new java.awt.Font("Comic Sans MS", 0, 13)); // NOI18N
-        jButton1.setText("Guardar");
+        jButton1.setText("Modificar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -108,21 +159,21 @@ public class MCliente extends javax.swing.JDialog {
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(218, 218, 218));
-        jButton4.setFont(new java.awt.Font("Comic Sans MS", 0, 13)); // NOI18N
-        jButton4.setText("Editar");
-        jButton4.setEnabled(false);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jButton3.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        jButton3.setText("Regresar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jButton3ActionPerformed(evt);
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        jButton3.setText("Regresar");
-
         jButton6.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         jButton6.setText("Buscar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jTextField7.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
 
@@ -131,9 +182,19 @@ public class MCliente extends javax.swing.JDialog {
 
         jButton7.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         jButton7.setText("Siguiente");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jButton8.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         jButton8.setText("Anterior");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -141,42 +202,42 @@ public class MCliente extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jButton5)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jButton8)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton7))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton5)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel7))
-                                .addGap(31, 31, 31)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jTextField7)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButton6))
-                                    .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
-                                    .addComponent(jTextField5)
-                                    .addComponent(jTextField3)
-                                    .addComponent(jTextField4)
-                                    .addComponent(jTextField2)
-                                    .addComponent(jTextField1)))))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel4)
+                                .addComponent(jLabel5)
+                                .addComponent(jLabel6)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel1)
+                                .addComponent(jLabel7))
+                            .addGap(31, 31, 31)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jTextField7)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jButton6))
+                                .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+                                .addComponent(jTextField5)
+                                .addComponent(jTextField3)
+                                .addComponent(jTextField4)
+                                .addComponent(jTextField2)
+                                .addComponent(jTextField1))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addGap(97, 97, 97)
-                        .addComponent(jButton4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton3)
+                                .addGap(161, 161, 161)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1)
+                            .addComponent(jButton7))))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,7 +284,6 @@ public class MCliente extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton4)
                     .addComponent(jButton3))
                 .addContainerGap())
         );
@@ -253,34 +313,12 @@ public class MCliente extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         // mensaje para saber si se va a editar o a insertar
-        if (this.verficarJtext()==false){
-            if(this.editar==false){
-                try{
-                    // insertar un nuevo cliente
-                    this.cliente.crearCliente(Integer.valueOf(this.jTextField6.getText()), this.jTextField1.getText()
-                        , this.jTextField2.getText(), this.jTextField3.getText(),
-                        Integer.valueOf(this.jTextField5.getText()), this.jTextField4.getText());
-                    this.cambiar();
-                    this.mensaje=false;
-                    JOptionPane.showMessageDialog(null,"Datos guardados correctamente",
-                        "Mensaje!", JOptionPane.INFORMATION_MESSAGE);
-
-                }catch(Exception e){
-                    String nl= System.getProperty("line.separator");
-                    // String msj="Error: "+ nl +"Debe de llenar todos los campos";
-                    String msj = "DPI debe ser un valor entero"
-                    +nl+ "Nit debe ser un valor entero"
-                    +nl+ "Verifique estos campos";
-                    JOptionPane.showMessageDialog(null, msj , "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }else{
+        if (this.verficarJtext()==false){            
                 // modificar un cliente
                 try{
-                    this.cliente.modificarCliente(this.clienteId, Integer.valueOf(this.jTextField6.getText()), this.jTextField1.getText()
+                    this.cliente.modificarCliente(this.id, Integer.valueOf(this.jTextField6.getText()), this.jTextField1.getText()
                         , this.jTextField2.getText(), this.jTextField3.getText(),
-                        Integer.valueOf(this.jTextField5.getText()), this.jTextField4.getText());
-                    this.cambiar();
-                    this.mensaje=false;
+                        Integer.valueOf(this.jTextField5.getText()), this.jTextField4.getText());  
                     JOptionPane.showMessageDialog(null,"Datos modificados correctamente",
                         "Mensaje!", JOptionPane.INFORMATION_MESSAGE);
                 }catch(Exception e){
@@ -291,7 +329,7 @@ public class MCliente extends javax.swing.JDialog {
                     +nl+ "Verifique estos campos";
                     JOptionPane.showMessageDialog(null, msj , "Error", JOptionPane.ERROR_MESSAGE);
                 }
-            }
+            
         }else{
             String nl= System.getProperty("line.separator");
             String msj="Debe de llenar todos los campos";
@@ -302,28 +340,56 @@ public class MCliente extends javax.swing.JDialog {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        //ture dice a telefono que es de cliente
         PanelTelefono tel;
-        tel = new PanelTelefono(null,true);
+        tel = new PanelTelefono(null,true, true);
         tel.nombreCliente(this.nomCliente);
-        tel.setId(this.cliente.clienteMID());
+        tel.setId(this.id);
         tel.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
-        this.mensaje=true;
-        this.clienteId=this.cliente.clienteMID();
-        this.editar=true;
-        this.jButton4.setEnabled(false);
-        this.jButton1.setEnabled(true);
-        this.jTextField1.setEditable(true);
-        this.jTextField2.setEditable(true);
-        this.jTextField3.setEditable(true);
-        this.jTextField4.setEditable(true);
-        this.jTextField5.setEditable(true);
-        this.jTextField6.setEditable(true);
-    }//GEN-LAST:event_jButton4ActionPerformed
+        if (id>1){
+        this.id--;
+        this.iniciar(id);
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        if (id<this.total){
+        this.id++;
+        this.iniciar(id);
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        try{
+            int idobtenido=this.cliente.getId(Integer.valueOf(this.jTextField7.getText()));
+            if (idobtenido!= -1){
+                this.id=idobtenido;
+                this.iniciar(id);
+            }else{
+                String msj="DPI No se encuentra";
+            JOptionPane.showMessageDialog(null, msj , "Error", JOptionPane.ERROR_MESSAGE);
+            }            
+        }catch(Exception e){
+             String nl= System.getProperty("line.separator");
+            String msj="DPI debe ser un valor entero";
+            JOptionPane.showMessageDialog(null, msj , "Error", JOptionPane.ERROR_MESSAGE);
+        }    
+        
+        
+        
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
+   
     /**
      * @param args the command line arguments
      */
@@ -369,7 +435,6 @@ public class MCliente extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;

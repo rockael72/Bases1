@@ -29,21 +29,22 @@ public class Telefono {
         }
         // inserta telefonno para proveedore
         if (cliente==-1){
-            this.conexion.ejecutar("insert into tblTelefono(Telefono, tblProveedore_id, tblEtiqueta_id)"
+            this.conexion.ejecutar("insert into tblTelefono(Telefono, tblProveedores_id, tblEtiqueta_id)"
                     + "values (\""+telefono+"\","+proveedor+","+etiqueta+")");
         }
     }
     
     public ResultSet getTelefono(int cliente, int proveedor){
         if (cliente==-1){
-            ResultSet provTel=this.conexion.consulta("select tblTelefono.Telefono, tblEtiqueta.Etiqueta from tblTelefono "
-                    + "inner join tblEtiqueta"
-                    + "on tblEtiqueta.id=tblTelefono.tblEtiqueta.id"
-                    + "where tblTelefono.tblCliente_id = "+proveedor+")");
+            ResultSet provTel=this.conexion.consulta("select Telefono, Etiqueta from tblProveedores\n" +
+            "left join tblTelefono\n" +
+            "on tblProveedores.id=tblTelefono.tblProveedores_id\n" +
+            "left join tblEtiqueta\n" +
+            "on tblEtiqueta.id=tblTelefono.tblEtiqueta_id\n" +
+            "where tblProveedores.id="+proveedor+"");
             return provTel;
         }
         if (proveedor == -1){
-            System.out.println("entro aca");
             ResultSet provTel=this.conexion.consulta("select Telefono, Etiqueta from tblCliente\n" +
             "left join tblTelefono\n" +
             "on tblCliente.id= tblTelefono.tblCliente_id\n" +
@@ -64,5 +65,37 @@ public class Telefono {
         }catch(SQLException e){
             System.out.println("Error en consulta " +e.getMessage());
         }
+    } 
+    
+    public void eliminarC(int id, String telefono){
+        this.conexion.ejecutar("delete from tblTelefono "
+                + "where tblCliente_id="+id+" and Telefono = '"+telefono+"'");        
+    }
+    
+    public void eliminarP(int id, String telefono){
+     this.conexion.ejecutar("delete from tblTelefono "
+                + "where tblProveedores_id="+id+" and Telefono = '"+telefono+"'");
+}
+    public void modificarC(int id, String telefono, String modificado, int etiqueta){
+        this.conexion.ejecutar("update tblTelefono set Telefono='"+modificado+"', tblEtiqueta_id="+etiqueta+" "
+                + "where tblCliente_id="+id+" and Telefono ='"+telefono+"'");
+    }
+    
+    public void modificarP(int id, String telefono, String modificado,int etiqueta){
+        this.conexion.ejecutar("update tblTelefono set Telefono='"+modificado+"', tblEtiqueta_id="+etiqueta+" "
+                + "where tblProveedores_id="+id+" and Telefono = '"+telefono+"'");
+    }
+    
+    public String buscar(String telefono){
+        ResultSet con=this.conexion.consulta("select Telefono from tblTelefono where Telefono="+telefono+"");
+        String tel="";
+        try{
+            while(con.next()){
+                tel=con.getString("Telefono");
+            }
+        }catch(Exception e){
+            
+        }
+        return tel;
     }
 }

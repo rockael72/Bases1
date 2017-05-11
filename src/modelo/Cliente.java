@@ -72,4 +72,97 @@ public class Cliente {
         return id;
         
     }
+    
+    public int getNitC(int id){
+        ResultSet busqueda = this.conexion.consulta("select Nit from tblCliente where id="+id+"");
+        int n =-1;
+        try{
+            while(busqueda.next()){
+                n = Integer.valueOf(busqueda.getString("Nit"));
+            }
+        }catch(SQLException e){
+            
+        }
+        return n;
+        
+    }
+    
+    public String getNombreC(int id){
+         ResultSet busqueda = this.conexion.consulta("select Nombre from tblCliente where id="+id+"");
+        String n ="";
+        try{
+            while(busqueda.next()){
+                n = busqueda.getString("Nombre");
+            }
+        }catch(SQLException e){
+            
+        }
+        return n;
+    }
+    
+    public String getApellidoC(int id){
+         ResultSet busqueda = this.conexion.consulta("select Apellido from tblCliente where id="+id+"");
+        String n ="";
+        try{
+            while(busqueda.next()){
+                n = busqueda.getString("Apellido");
+            }
+        }catch(SQLException e){
+            
+        }
+        return n;
+    }
+    
+    public String getDireccionC(int id){
+         ResultSet busqueda = this.conexion.consulta("select Direccion from tblCliente where id="+id+"");
+        String n ="";
+        try{
+            while(busqueda.next()){
+                n = busqueda.getString("Direccion");
+            }
+        }catch(SQLException e){
+            
+        }
+        return n;
+    }
+    
+    public String getCorreoC(int id){
+         ResultSet busqueda = this.conexion.consulta("select correo from tblCliente where id="+id+"");
+        String n ="";
+        try{
+            while(busqueda.next()){
+                n = busqueda.getString("correo");
+            }
+        }catch(SQLException e){
+            
+        }
+        return n;
+    }
+    
+        
+    public int getDPIC(int id){
+        ResultSet busqueda = this.conexion.consulta("select DPI from tblCliente where id="+id+"");
+        int n =-1;
+        try{
+            while(busqueda.next()){
+                n = Integer.valueOf(busqueda.getString("DPI"));
+            }
+        }catch(SQLException e){
+            
+        }
+        return n;
+        
+    }
+    
+    public int total(){
+        ResultSet total=this.conexion.consulta("select count(*) as t from tblCliente");
+        int t = 0;
+          try{
+             while(total.next())
+            t = Integer.valueOf(total.getString("t"));
+        }catch(SQLException e){
+            
+        }
+        return t;        
+    }
 }

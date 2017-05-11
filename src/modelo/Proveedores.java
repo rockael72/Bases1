@@ -67,4 +67,61 @@ public class Proveedores {
         }
         return 0;
     }
+    
+    public String getNombrP(int id){
+        ResultSet n=this.conexion.consulta("select Nombre from tblProveedores "
+                + "where id="+id+"");
+        String nom="";
+        try{
+            while(n.next()){
+               nom=n.getString("Nombre");
+            }
+        }catch(Exception e){
+            
+        }
+        return nom;
     }
+    
+    public String getDireccionP(int id){
+         ResultSet n=this.conexion.consulta("select Direccion from tblProveedores "
+                + "where id="+id+"");
+        String nom="";
+        try{
+            while(n.next()){
+               nom=n.getString("Direccion");
+            }
+        }catch(Exception e){
+            
+        }
+        return nom;
+        
+    }
+    
+    public String getCorreo(int id){
+         ResultSet n=this.conexion.consulta("select Correo from tblProveedores "
+                + "where id="+id+"");
+        String nom="";
+        try{
+            while(n.next()){
+               nom=n.getString("Correo");
+            }
+        }catch(Exception e){
+            
+        }
+        return nom;
+        
+    }
+    
+    public int total(){
+        ResultSet total=this.conexion.consulta("select count(*) as t from tblProveedores");
+        int t = 0;
+          try{
+             while(total.next())
+            t = Integer.valueOf(total.getString("t"));
+        }catch(SQLException e){
+            
+        }
+        return t;        
+    }
+ }
+

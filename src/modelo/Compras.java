@@ -21,9 +21,9 @@ public class Compras {
         this.conexion.conexion();
     }
     
-    public void insertar(int idproveedor, int idusuario){
-        this.conexion.ejecutar("insert into tblCompras(tblProveedores_id, tblUsuario_id) "
-                + "values ("+idproveedor+", "+idusuario+")");
+    public void insertar(int idproveedor, int idusuario, float total){
+        this.conexion.ejecutar("insert into tblCompras(Total,tblProveedores_id, tblUsuario_id) "
+                + "values ("+total+","+idproveedor+", "+idusuario+")");
     }
     
     public int getMaxid(){

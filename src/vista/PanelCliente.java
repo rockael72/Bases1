@@ -129,6 +129,7 @@ public class PanelCliente extends javax.swing.JDialog {
         jButton5.setBackground(new java.awt.Color(218, 218, 218));
         jButton5.setFont(new java.awt.Font("Comic Sans MS", 0, 13)); // NOI18N
         jButton5.setText("Agregar Teléfono");
+        jButton5.setEnabled(false);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -146,6 +147,11 @@ public class PanelCliente extends javax.swing.JDialog {
         });
 
         jButton3.setText("Regresar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -368,7 +374,7 @@ public class PanelCliente extends javax.swing.JDialog {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
        PanelTelefono tel;
-       tel = new PanelTelefono(null,true);
+       tel = new PanelTelefono(null,true, true);
        tel.nombreCliente(this.nomCliente);
        tel.setId(this.cliente.clienteMID());
        tel.setVisible(true);
@@ -388,6 +394,11 @@ public class PanelCliente extends javax.swing.JDialog {
         this.jTextField5.setEditable(true);
         this.jTextField6.setEditable(true);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        this.hide();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

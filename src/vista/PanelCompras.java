@@ -6,6 +6,8 @@
 package vista;
 
 import java.awt.BorderLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.Locale;
@@ -38,29 +40,108 @@ public class PanelCompras extends javax.swing.JDialog {
     private Object datos[];
     private int cont;
     private int usr;
+    private Compras compra;    
+    private float total;
     public PanelCompras(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         this.parent=parent;
+        this.compra= new Compras();
         this.proveedores = new Proveedores();
         this.pProveedor= new PanelConsultas();
         this.pDetalle= new PanelConsultas();
         this.jPanel8.setLayout(new BorderLayout());        
         this.jPanel8.add(pProveedor);
         this.cont=1;
-        
+        this.jLabel6.setText("0");
         this.Mercaderia = new Mercaderia();
         this.pMaterial= new PanelConsultas();
-        this.pMaterial.generarTabla(this.proveedores.getProveedorCod(1));
+        //this.pMaterial.generarTabla(this.proveedores.getProveedorCod(1));
         this.jPanel4.setLayout(new BorderLayout());        
         this.jPanel4.add(this.pMaterial);
         this.pMaterial.setVisible(true);
         this.jPanel1.setLayout(new BorderLayout());        
         this.jPanel1.add(this.pDetalle);
         this.detalleCompra();
+        this.panelPclick();
+        this.panelClickM();
+        this.total=0;
     }
     
+    private void panelPclick(){
+        this.pProveedor.jTable1.addMouseListener(new MouseListener(){
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                 if(pProveedor.getSelect()!=null){
+            Object[] elegido = pProveedor.getSelect();
+            int id = proveedores.getId(elegido[1].toString(), elegido[2].toString(), elegido[3].toString());
+            jTextField1.setText(Integer.toString(id));        
+        }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent me) {
+      
+                 if(pProveedor.getSelect()!=null){
+            Object[] elegido = pProveedor.getSelect();
+            int id = proveedores.getId(elegido[1].toString(), elegido[2].toString(), elegido[3].toString());
+            jTextField1.setText(Integer.toString(id));        
+            }
+                 }
+
+            @Override
+            public void mouseReleased(MouseEvent me) {
+              
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent me) {
+              
+            }
+
+            @Override
+            public void mouseExited(MouseEvent me) {
+
+            }
+            
+        });
+    }
+    
+    private void panelClickM(){
+        this.pMaterial.jTable1.addMouseListener(new MouseListener(){
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                 if(pMaterial.getSelect()!=null){
+            datos = pMaterial.getSelect();  
+            
+        }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent me) {
+                 if(pMaterial.getSelect()!=null){
+            datos = pMaterial.getSelect();                                  
+        }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent me) {
+              
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent me) {
+              
+            }
+
+            @Override
+            public void mouseExited(MouseEvent me) {
+              
+            }
+        });
+        
+    }
     public void idusr(int usr){
         this.usr=usr;
     }
@@ -107,7 +188,6 @@ public class PanelCompras extends javax.swing.JDialog {
         jPanel4 = new javax.swing.JPanel();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
@@ -127,8 +207,6 @@ public class PanelCompras extends javax.swing.JDialog {
         setTitle("Compras");
         setResizable(false);
 
-        jPanel2.setBorder(null);
-
         jButton1.setText("Guardar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,7 +214,7 @@ public class PanelCompras extends javax.swing.JDialog {
             }
         });
 
-        jButton3.setText("Cancelar");
+        jButton3.setText("Regresar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -180,21 +258,21 @@ public class PanelCompras extends javax.swing.JDialog {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
-                .addGap(170, 170, 170))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton12)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jButton6)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton11))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(123, 123, 123))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,12 +282,12 @@ public class PanelCompras extends javax.swing.JDialog {
                     .addComponent(jLabel1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton6)
                     .addComponent(jButton11)
                     .addComponent(jButton12))
-                .addGap(117, 117, 117))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -241,13 +319,17 @@ public class PanelCompras extends javax.swing.JDialog {
         jLabel2.setText("Buscar");
 
         jButton2.setText("Buscar");
+        jButton2.setEnabled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
+        jTextField2.setEditable(false);
+
         jButton5.setText("Nuevo");
+        jButton5.setEnabled(false);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -255,6 +337,7 @@ public class PanelCompras extends javax.swing.JDialog {
         });
 
         jButton7.setText("Agregar");
+        jButton7.setEnabled(false);
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
@@ -264,6 +347,10 @@ public class PanelCompras extends javax.swing.JDialog {
         jLabel3.setText("Cantidad");
 
         jLabel4.setText("Precio U");
+
+        jTextField3.setEditable(false);
+
+        jTextField4.setEditable(false);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -346,11 +433,16 @@ public class PanelCompras extends javax.swing.JDialog {
         });
 
         jButton9.setText("Nuevo");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
-        jButton10.setText("Salir");
-
+        jLabel5.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         jLabel5.setText("Q Total:");
 
+        jLabel6.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         jLabel6.setText("jLabel6");
 
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Proveedor"));
@@ -383,56 +475,56 @@ public class PanelCompras extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(115, 115, 115)
-                        .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                        .addGap(79, 79, 79)
+                        .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
-                        .addGap(107, 107, 107)
+                        .addComponent(jButton8)
+                        .addGap(3, 3, 3)
+                        .addComponent(jButton1)
+                        .addGap(2, 2, 2)
+                        .addComponent(jButton9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)
-                        .addGap(23, 23, 23))
+                        .addGap(87, 87, 87))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 309, Short.MAX_VALUE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(205, Short.MAX_VALUE)
+                .addContainerGap(225, Short.MAX_VALUE)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6)
-                    .addComponent(jButton10)
                     .addComponent(jButton9)
                     .addComponent(jButton3)
                     .addComponent(jButton1)
@@ -457,10 +549,9 @@ public class PanelCompras extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-       Compras compra= new Compras();
-       DetalleCompras dc= new DetalleCompras();
-        compra.insertar(Integer.valueOf(this.jTextField1.getText()), this.usr);
+        // TODO add your handling code here:      
+        DetalleCompras dc= new DetalleCompras();
+        compra.insertar(Integer.valueOf(this.jTextField1.getText()), this.usr, this.total);
         int idc = compra.getMaxid();
         Categoria c= new Categoria();
         Tipo t = new Tipo();
@@ -469,9 +560,7 @@ public class PanelCompras extends javax.swing.JDialog {
         Tamanio tm= new Tamanio();
         
         int filas = this.pDetalle.getCantidadFilas();
-        int columnas = this.pDetalle.getCantidadColumnas();
-        int idm = 0;
-        float total=0;
+        int idm = 0;       
         for (int i=0;i<filas;i++){
             String nombre = this.pDetalle.getFila(i, 1).toString();
             String cat = this.pDetalle.getFila(i, 2).toString();
@@ -486,6 +575,10 @@ public class PanelCompras extends javax.swing.JDialog {
             
             
         }
+        JOptionPane.showMessageDialog(null,"Datos guardados correctamente",
+                        "Mensaje!", JOptionPane.INFORMATION_MESSAGE);
+        this.dispose();
+        new PanelCompras(this.parent,true).setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -508,8 +601,7 @@ public class PanelCompras extends javax.swing.JDialog {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:        
-        this.mostrarProveedor();
-        
+        this.mostrarProveedor();               
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -537,11 +629,7 @@ public class PanelCompras extends javax.swing.JDialog {
 
     private void jPanel8MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel8MouseMoved
         // TODO add your handling code here:
-        if(this.pProveedor.getSelect()!=null){
-            Object[] elegido = this.pProveedor.getSelect();
-            int id = this.proveedores.getId(elegido[1].toString(), elegido[2].toString(), elegido[3].toString());
-            this.jTextField1.setText(Integer.toString(id));        
-        }
+       
     }//GEN-LAST:event_jPanel8MouseMoved
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
@@ -555,7 +643,14 @@ public class PanelCompras extends javax.swing.JDialog {
             this.jButton4.setEnabled(false);
             this.jButton6.setEnabled(false);
             this.jButton12.setEnabled(false);
-            this.pProveedor.deshabilitar();
+            this.pProveedor.jTable1.setEnabled(false);
+            this.jButton7.setEnabled(true);
+            this.jButton5.setEnabled(true);
+            this.jButton2.setEnabled(true);
+            this.jTextField2.setEditable(true);
+            this.jTextField4.setEditable(true);
+            this.jTextField3.setEditable(true);
+            
         }else{
              String msj="Debe ingresar codigo de proveedor";
             JOptionPane.showMessageDialog(null, msj , "Error", JOptionPane.ERROR_MESSAGE);  
@@ -575,20 +670,23 @@ public class PanelCompras extends javax.swing.JDialog {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
         if(this.verificarMercaderia()==false){           
-            try{
             Object[] total = new Object[this.datos.length+2];
+            try{            
             System.arraycopy(this.datos, 0,total, 0, this.datos.length);
             total[this.datos.length]=Integer.valueOf(this.jTextField3.getText());
             total[this.datos.length+1]=Float.valueOf(this.jTextField4.getText());  
             total[0]=this.cont;
-            this.pDetalle.insertarDatos(total);
-            this.cont++;
-            this.jTextField3.setText("");
-            this.jTextField4.setText("");
             }catch(Exception e){
                 String msj="Canitdad y Precio deben ser valores numéricos";
             JOptionPane.showMessageDialog(null, msj , "Error", JOptionPane.ERROR_MESSAGE);
             }
+            this.pDetalle.insertarDatos(total);
+            this.cont++;
+            this.jTextField3.setText("");
+            this.jTextField4.setText("");
+            this.total= (Float.valueOf(total[8].toString())*Integer.valueOf(total[7].toString())+this.total);
+            this.jLabel6.setText(Float.toString(this.total));
+            
         }else{
               String msj="Debe ingresar Cantidad y Precio Compra";
             JOptionPane.showMessageDialog(null, msj , "Error", JOptionPane.ERROR_MESSAGE);  
@@ -597,16 +695,23 @@ public class PanelCompras extends javax.swing.JDialog {
 
     private void jPanel4MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseMoved
         // TODO add your handling code here:
-         if(this.pMaterial.getSelect()!=null){
-            this.datos = this.pMaterial.getSelect();                        
-        }
+      
     }//GEN-LAST:event_jPanel4MouseMoved
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
-        
+        Object[] total=this.pDetalle.getSelect();
+        this.total= (this.total-Float.valueOf(total[8].toString())*Integer.valueOf(total[7].toString()));
+            this.jLabel6.setText(Float.toString(this.total));
         this.pDetalle.eliminar();
+        
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        new PanelCompras(this.parent,true).setVisible(true);
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     private boolean verificarMercaderia(){
         boolean verificar = false;
@@ -681,7 +786,6 @@ public class PanelCompras extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton2;

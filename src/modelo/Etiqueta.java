@@ -23,12 +23,12 @@ public class Etiqueta {
     
     public void setEtiqueta(String etiqueta){
         conexion.ejecutar("insert into tblEtiqueta (Etiqueta) "+
-                     "values ('"+etiqueta+")");
+                     "values ('"+etiqueta+"')");
     }
     
     public int getId(String etiqueta){
         ResultSet categoria = this.conexion.consulta("select id from tblEtiqueta "
-                + "where Etiqueta=\""+etiqueta+"\")");
+                + "where Etiqueta=\""+etiqueta+"\"");
         int id = -1;
          try{
         while(categoria.next()){

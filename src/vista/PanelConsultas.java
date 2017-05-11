@@ -176,6 +176,11 @@ public class PanelConsultas extends javax.swing.JPanel {
         setBackground(new java.awt.Color(205, 205, 205));
         setAutoscrolls(true);
         setMaximumSize(new java.awt.Dimension(0, 0));
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                formMousePressed(evt);
+            }
+        });
 
         jTable1.setBackground(new java.awt.Color(254, 254, 254));
         jTable1.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
@@ -188,6 +193,11 @@ public class PanelConsultas extends javax.swing.JPanel {
             }
         ));
         jTable1.setName(""); // NOI18N
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -205,10 +215,18 @@ public class PanelConsultas extends javax.swing.JPanel {
                 .addGap(2, 2, 2))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formMousePressed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
                                     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    public javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

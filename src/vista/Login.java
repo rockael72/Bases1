@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -196,11 +197,11 @@ public class Login extends javax.swing.JFrame {
            if(existe){
                
                int id = usuario.getId(usr, this.jPasswordField1.getText());
-               System.out.println("esto es id "+id);
                usuario.setHistorial(id);
                this.dispose();
                
                 Principal p= new Principal(id, this.jTextField1.getText());
+                p.setExtendedState( p.getExtendedState()|JFrame.MAXIMIZED_BOTH );
                 p.setVisible(true);
            }else{
                 JOptionPane.showMessageDialog(this,

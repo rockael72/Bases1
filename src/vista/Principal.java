@@ -36,7 +36,7 @@ public class Principal extends javax.swing.JFrame {
                         "Usuario",
                         "Contrasenia",
                         "Administrador"};
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         Usuario us = new Usuario();
         this.pc= new PanelConsultas();
         this.pc.generarTabla(us.usuario());
@@ -91,8 +91,9 @@ public class Principal extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
+        setResizable(false);
         addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
             public void ancestorMoved(java.awt.event.HierarchyEvent evt) {
             }
@@ -307,10 +308,20 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuItem4.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         jMenuItem4.setText("Cliente");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem4);
 
         jMenuItem14.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         jMenuItem14.setText("Proveedor");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem14);
 
         jMenuItem3.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
@@ -447,6 +458,16 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         new Musuario(this,true).setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        new MCliente(this,true).setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        // TODO add your handling code here:
+        new Mproveedor(this,true).setVisible(true);
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
 
     /**
      * @param args the command line arguments

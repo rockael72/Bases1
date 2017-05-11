@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import vista.Login;
@@ -55,6 +56,7 @@ UIManager.put("nimbusBlueGrey", new Color(214,217,223)); // barras de menu
 }
 
    Login p= new Login();
+  
    p.setVisible(true);  
     p.setLocationRelativeTo(null);
     
