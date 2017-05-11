@@ -39,4 +39,16 @@ public class Reservacion {
         }
         return id;
     }
+    
+    public void tota(int id, float total){
+        this.conexion.ejecutar("update tblReservacion set Total="+total+" where id="+id+"");
+    }
+    
+    public void cancelar(int id, boolean cancelar){
+        this.conexion.ejecutar("update tblReservacion set Anulado="+cancelar+" where id="+id+"");
+    }
+    
+    public void eliminar(int id){
+        this.conexion.ejecutar("delete from tblReservacion where id = "+id+"");
+    }
 }

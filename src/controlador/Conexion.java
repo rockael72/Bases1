@@ -18,7 +18,7 @@ import java.sql.Statement;
 public class Conexion {
 
     private static Connection conexion = null;
-    private String url = "jdbc:mysql://localhost:3306/bdAlquiler3";
+    private String url = "jdbc:mysql://localhost:3306/bdAlquiler";
     //private String pass = "ServifiestasEstuardO";
     private String pass = "Daniel16";
     private String usr = "root";

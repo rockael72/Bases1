@@ -30,7 +30,6 @@ import modelo.Proveedores;
 import modelo.Reservacion;
 import modelo.Tipo;
 
-
 /**
  *
  * @author arch
@@ -41,11 +40,11 @@ public class PanelReservacion extends javax.swing.JDialog {
      * Creates new form PanelReservacion
      */
     private Categoria c;
-private        Tipo t;
-private        Material m ;
-private        CColor co ;
-private        Tamanio tm;
-private DetalleAlquiler dc;
+    private Tipo t;
+    private Material m;
+    private CColor co;
+    private Tamanio tm;
+    private DetalleAlquiler dc;
     private Cliente cliente;
     private Mercaderia mercaderia;
     private Ciudad ciudad;
@@ -59,36 +58,40 @@ private DetalleAlquiler dc;
     private int cont;
     private int usr;
     private int existencia;
+    private float pago;
+    private boolean aceptar;
     public PanelReservacion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.dc= new DetalleAlquiler();
-        this.c= new Categoria(); 
+        this.dc = new DetalleAlquiler();
+        this.c = new Categoria();
         this.t = new Tipo();
         this.m = new Material();
         this.co = new CColor();
-        this.tm= new Tamanio();
-        this.existencia=0;
-        this.cliente= new Cliente();
-        this.ciudad= new Ciudad();
-        this.mercaderia=new Mercaderia();
+        this.tm = new Tamanio();
+        this.existencia = 0;
+        this.cliente = new Cliente();
+        this.ciudad = new Ciudad();
+        this.mercaderia = new Mercaderia();
         this.setLocationRelativeTo(null);
-        this.reservacion= new Reservacion();
-        this.parent=parent;
-        this.pcliente= new PanelConsultas();
-        this.preservacion=new PanelConsultas();
-        this.pmercaderia= new PanelConsultas();
+        this.reservacion = new Reservacion();
+        this.parent = parent;
+        this.pcliente = new PanelConsultas();
+        this.preservacion = new PanelConsultas();
+        this.pmercaderia = new PanelConsultas();
         this.jPanel2.setLayout(new BorderLayout());
-       this.jPanel2.add(this.pcliente);
-       this.jPanel4.setLayout(new BorderLayout());
-       this.jPanel4.add(this.pmercaderia);
-       this.jPanel5.setLayout(new BorderLayout());
-       this.jPanel5.add(this.preservacion);
-       this.boxCiudad();
-       this.detalleReservacion();
-       this.cont=1;
-       this.usr=0;        
-       this.selecPM();
+        this.jPanel2.add(this.pcliente);
+        this.jPanel4.setLayout(new BorderLayout());
+        this.jPanel4.add(this.pmercaderia);
+        this.jPanel5.setLayout(new BorderLayout());
+        this.jPanel5.add(this.preservacion);
+        this.boxCiudad();
+        this.detalleReservacion();
+        this.cont = 1;
+        this.usr = 0;
+        this.selecPM();
+        this.pago=0;
+        this.aceptar=false;
     }
 
     /**
@@ -132,7 +135,7 @@ private DetalleAlquiler dc;
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cliente"));
 
@@ -286,16 +289,16 @@ private DetalleAlquiler dc;
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                            .addComponent(jButton6))
-                        .addGroup(jPanel3Layout.createSequentialGroup()
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                            .addComponent(jButton6))))
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addComponent(jLabel3)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addContainerGap())
     );
@@ -417,7 +420,7 @@ private DetalleAlquiler dc;
     );
     jPanel5Layout.setVerticalGroup(
         jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 123, Short.MAX_VALUE)
+        .addGap(0, 129, Short.MAX_VALUE)
     );
 
     jButton8.setText("Eliminar");
@@ -455,7 +458,7 @@ private DetalleAlquiler dc;
     });
 
     jLabel6.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
-    jLabel6.setText("Total");
+    jLabel6.setText("Total:");
 
     jLabel7.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
     jLabel7.setText("jLabel7");
@@ -485,7 +488,7 @@ private DetalleAlquiler dc;
             .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
             .addComponent(jLabel6)
             .addGap(18, 18, 18)
             .addComponent(jLabel7)
@@ -506,8 +509,8 @@ private DetalleAlquiler dc;
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGap(12, 12, 12)
+            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jButton9)
                 .addComponent(jButton4)
@@ -522,158 +525,133 @@ private DetalleAlquiler dc;
     pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    private void selecPM(){
-        this.pmercaderia.jTable1.addMouseListener(new MouseListener(){
+    private void selecPM() {
+        this.pmercaderia.jTable1.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent me) {
-                        if(pmercaderia.getSelect()!=null){
-            datos = pmercaderia.getSelect();
-            existencia=Integer.valueOf(datos[9].toString());       
-            System.out.println(existencia+"esto hay");
-        }
+                if (pmercaderia.getSelect() != null) {
+                    datos = pmercaderia.getSelect();
+                    existencia = Integer.valueOf(datos[9].toString());
+                    System.out.println(existencia + "esto hay");
+                }
             }
 
             @Override
             public void mousePressed(MouseEvent me) {
-                  if(pmercaderia.getSelect()!=null){
-            datos = pmercaderia.getSelect();
-            existencia=Integer.valueOf(datos[9].toString());    
-            }}
-
-            @Override
-            public void mouseReleased(MouseEvent me) {
-                
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent me) {
-                
-            }
-
-            @Override
-            public void mouseExited(MouseEvent me) {
-                
-            }
-        });
-}
- 
-    
-    private void selectPD(){
-        this.preservacion.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent me) {
-                
-            }
-
-            @Override
-            public void mousePressed(MouseEvent me) {
-                
+                if (pmercaderia.getSelect() != null) {
+                    datos = pmercaderia.getSelect();
+                    existencia = Integer.valueOf(datos[9].toString());
+                }
             }
 
             @Override
             public void mouseReleased(MouseEvent me) {
-                
+
             }
 
             @Override
             public void mouseEntered(MouseEvent me) {
-                
+
             }
 
             @Override
             public void mouseExited(MouseEvent me) {
-                
+
             }
         });
     }
-    private void detalleReservacion(){
-     Object[] columnas = {"#","Nombre","Categoria",
-         "Tipo","Material","Color","Tamaño","Cantidad","Precio"};  
-     this.preservacion.crearColumnas(columnas);
-     this.jPanel5.add(this.preservacion);
-     this.preservacion.setVisible(true);
+
+    private void detalleReservacion() {
+        Object[] columnas = {"#", "Nombre", "Categoria",
+            "Tipo", "Material", "Color", "Tamaño", "Cantidad", "Precio"};
+        this.preservacion.crearColumnas(columnas);
+        this.jPanel5.add(this.preservacion);
+        this.preservacion.setVisible(true);
     }
-    
-    public void setUsr(int usr){
-        this.usr=usr;
+
+    public void setUsr(int usr) {
+        this.usr = usr;
     }
-    
-     private void boxCiudad(){       
+
+    private void boxCiudad() {
         ResultSet eti = this.ciudad.getAll();
-         try{       
-        while(eti.next()){
-            this.jComboBox2.addItem(eti.getString("Ciudad"));            
-        }
-        this.jComboBox2.addItem("Nuevo ...");
-        }catch(SQLException e){
-            System.out.println("Error en consulta " +e.getMessage());
+        try {
+            while (eti.next()) {
+                this.jComboBox2.addItem(eti.getString("Ciudad"));
+            }
+            this.jComboBox2.addItem("Nuevo ...");
+        } catch (SQLException e) {
+            System.out.println("Error en consulta " + e.getMessage());
         }
     }
-     
-       private boolean verificarMercaderia(){
+
+    private boolean verificarMercaderia() {
         boolean verificar = false;
-        String aux = jTextField4.getText().trim(); 
-        if (aux.length() == 0)
+        String aux = jTextField4.getText().trim();
+        if (aux.length() == 0) {
             verificar = true;
-  
+        }
+
         return verificar;
-        
+
     }
-    
+
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-     
-            String aux = jTextField3.getText().trim();
-        if (aux.length() > 0){
-            this.pmercaderia.generarTabla(this.mercaderia.getMercadriaP(this.jTextField3.getText()));            
+
+        String aux = jTextField3.getText().trim();
+        if (aux.length() > 0) {
+            this.pmercaderia.generarTabla(this.mercaderia.getMercadriaP(this.jTextField3.getText()));
             this.pmercaderia.setVisible(true);
-        }else{
-            String msj="Debe ingresar nombre de un artículo";
-            JOptionPane.showMessageDialog(null, msj , "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String msj = "Debe ingresar nombre de un artículo";
+            JOptionPane.showMessageDialog(null, msj, "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        if(this.verificarMercaderia()==false){
-             int cantidad=0;
-            try{
+        if (this.verificarMercaderia() == false) {
+            int cantidad = 0;
+            try {
                 cantidad = Integer.parseInt(this.jTextField4.getText());
-               }catch(Exception e){
-                String msj="Canitdad debe ser un valor numéricos";
-                JOptionPane.showMessageDialog(null, msj , "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception e) {
+                String msj = "Canitdad debe ser un valor numéricos";
+                JOptionPane.showMessageDialog(null, msj, "Error", JOptionPane.ERROR_MESSAGE);
             }
-                if(cantidad<=this.existencia){
-               Object[] total = new Object[this.datos.length];               
-               System.arraycopy(this.datos, 0,total, 0, this.datos.length);                                                              
-               total[8]=total[10];
-               total[7]=cantidad;// canitdad = a precio
-               total2 = new Object[this.datos.length];                                              
-               System.arraycopy(total, 0,total2, 0, this.datos.length-1);                                                                                 
-               //total2[this.datos.length-1]=cantidad;                          
-               total2[0]=this.cont;
+            if (cantidad <= this.existencia) {
+                Object[] total = new Object[this.datos.length];
+                System.arraycopy(this.datos, 0, total, 0, this.datos.length);
+                float precio=Float.valueOf(total[10].toString());
+                total[8] = total[10];
+                total[7] = cantidad;// canitdad = a precio
+                total2 = new Object[this.datos.length];
+                System.arraycopy(total, 0, total2, 0, this.datos.length - 1);
+                //total2[this.datos.length-1]=cantidad;                          
+                total2[0] = this.cont;
+                
                 this.preservacion.insertarDatos(total2);
                 this.cont++;
-                
+
                 this.insertarDetalle();
-                this.pmercaderia.generarTabla(this.mercaderia.getMercadriaP(this.jTextField3.getText()));            
+                this.pmercaderia.generarTabla(this.mercaderia.getMercadriaP(this.jTextField3.getText()));
                 this.pmercaderia.setVisible(true);
                 this.jTextField4.setText("");
-                }else{
-                    String msj="Solo hay "+ this.existencia +" en inventario";
-                JOptionPane.showMessageDialog(null, msj , "Error", JOptionPane.ERROR_MESSAGE);
-                }
-                
-            
-        }else{
-            String msj="Debe ingresar Cantidad y Precio Compra";
-            JOptionPane.showMessageDialog(null, msj , "Error", JOptionPane.ERROR_MESSAGE);
+                this.pago=this.pago+cantidad*precio;
+                this.jLabel7.setText(String.valueOf(this.pago));
+            } else {
+                String msj = "Solo hay " + this.existencia + " en inventario";
+                JOptionPane.showMessageDialog(null, msj, "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } else {
+            String msj = "Debe ingresar Cantidad y Precio Compra";
+            JOptionPane.showMessageDialog(null, msj, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -684,91 +662,117 @@ private DetalleAlquiler dc;
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
-        Object[] seleccion=this.preservacion.getSelect();        
-            String nombre = seleccion[1].toString();
-            int cat = this.c.getId(seleccion[2].toString());
-            int tip = this.t.getId(seleccion[3].toString());
-            int mat = this.m.getId(seleccion[4].toString());
-            int col = this.co.getId(seleccion[5].toString());
-            int tam = this.tm.getId(seleccion[6].toString());
-            int cant= Integer.parseInt(seleccion[7].toString());
-            float pc = Float.parseFloat(seleccion[8].toString());            
-            int idm = this.mercaderia.getId(nombre, cat, tip, mat, col, tam);                     
-        this.dc.eliminar(this.reservacion.getMaxid(), idm, pc,cant);
+        Object[] seleccion = this.preservacion.getSelect();
+        String nombre = seleccion[1].toString();
+        int cat = this.c.getId(seleccion[2].toString());
+        int tip = this.t.getId(seleccion[3].toString());
+        int mat = this.m.getId(seleccion[4].toString());
+        int col = this.co.getId(seleccion[5].toString());
+        int tam = this.tm.getId(seleccion[6].toString());
+        int cant = Integer.parseInt(seleccion[7].toString());
+        float pc = Float.parseFloat(seleccion[8].toString());
+        int idm = this.mercaderia.getId(nombre, cat, tip, mat, col, tam);
+        this.dc.eliminar(this.reservacion.getMaxid(), idm, pc, cant);
         this.preservacion.eliminar();
-         this.pmercaderia.generarTabla(this.mercaderia.getMercadriaP(this.jTextField3.getText()));            
-                this.pmercaderia.setVisible(true);
-        
+        this.pmercaderia.generarTabla(this.mercaderia.getMercadriaP(this.jTextField3.getText()));
+        this.pmercaderia.setVisible(true);
+        this.pago=this.pago-pc*cant;
+        this.jLabel7.setText(Float.toString(pago));
+
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-  
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private String girarFecha(String fecha){
-        String[] fecha2= {"","",""};
-        int cont=0;
-        for(int i=0;i<fecha.length(); i++){
-        
-            if(fecha.charAt(i)!='/'){
-            fecha2[cont]+=fecha.charAt(i);
-            }else{
+    private String girarFecha(String fecha) {
+        String[] fecha2 = {"", "", ""};
+        int cont = 0;
+        for (int i = 0; i < fecha.length(); i++) {
+
+            if (fecha.charAt(i) != '/') {
+                fecha2[cont] += fecha.charAt(i);
+            } else {
                 cont++;
             }
-        }    
-        fecha=fecha2[2]+"/"+fecha2[1]+"/"+fecha2[0];  
+        }
+        fecha = fecha2[2] + "/" + fecha2[1] + "/" + fecha2[0];
         return fecha;
-        
+
     }
-    
-    private void insertarDetalle(){                   
+
+    private void insertarDetalle() {
         int idr = reservacion.getMaxid();    //id reservacion
         int idm = 0;
-        float total=0;
-            String nombre = this.total2[1].toString();
-            String cat = this.total2[2].toString();
-            String tip = this.total2[3].toString();
-            String mat = this.total2[4].toString();
-            String col = this.total2[5].toString();
-            String tam = this.total2[6].toString();            
-            int cant= Integer.parseInt(this.total2[7].toString());
-            float pc = Float.parseFloat(this.total2[8].toString());
-            System.out.println(cant + " "+ pc+" "+this.total2[8].toString()+" "+this.total2.length);
-            idm = this.mercaderia.getId(nombre, c.getId(cat),t.getId(tip),m.getId(mat), co.getId(col), tm.getId(tam));            
-            // inserta en tabla detalle id reservacion id mercaderia precio y cantidad            
-            this.dc.insertar(idr, idm, pc, cant);
-        
-    
+        String nombre = this.total2[1].toString();
+        String cat = this.total2[2].toString();
+        String tip = this.total2[3].toString();
+        String mat = this.total2[4].toString();
+        String col = this.total2[5].toString();
+        String tam = this.total2[6].toString();
+        int cant = Integer.parseInt(this.total2[7].toString());
+        float pc = Float.parseFloat(this.total2[8].toString());
+        System.out.println(cant + " " + pc + " " + this.total2[8].toString() + " " + this.total2.length);
+        idm = this.mercaderia.getId(nombre, c.getId(cat), t.getId(tip), m.getId(mat), co.getId(col), tm.getId(tam));
+        // inserta en tabla detalle id reservacion id mercaderia precio y cantidad            
+        this.dc.insertar(idr, idm, pc, cant);
+
     }
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
+            // TODO add your handling code here:
+           
+           if(this.aceptar==true){
+                int resp = JOptionPane.showConfirmDialog(null, "¿Esta seguro de salir todos los datos se perderan?", "Alerta!", JOptionPane.YES_NO_OPTION);
+                if(resp==0){
+                    int cantidadFilas = this.preservacion.getCantidadFilas();
+                    for (int i=0;i<cantidadFilas;i++){     
+                        
+                         String nombre = this.preservacion.getFila(i, 1).toString();
+                int cat = this.c.getId(this.preservacion.getFila(i, 2).toString());
+                int tip = this.t.getId(this.preservacion.getFila(i, 3).toString());
+                int mat = this.m.getId(this.preservacion.getFila(i, 4).toString());
+                int col = this.co.getId(this.preservacion.getFila(i, 5).toString());
+                int tam = this.tm.getId(this.preservacion.getFila(i, 6).toString());
+                int cant =Integer.valueOf(this.preservacion.getFila(i, 7).toString());;
+                float pc = Float.parseFloat(this.preservacion.getFila(i, 8).toString());
+                int idm = this.mercaderia.getId(nombre, cat, tip, mat, col, tam);
+                this.dc.eliminar(this.reservacion.getMaxid(), idm, pc, cant);                        
+                    }                         
+               this.reservacion.eliminar(this.reservacion.getMaxid());
+               this.dispose();
+                }
+           }else{
+        this.dispose();       
+           }
+        
+        
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         int sel = this.jComboBox1.getSelectedIndex();
-        if (sel==0){            
+        if (sel == 0) {
             this.pcliente.generarTabla(this.cliente.bid(Integer.valueOf(this.jTextField1.getText())));
         }
-        if(sel==1){
+        if (sel == 1) {
             this.pcliente.generarTabla(this.cliente.bdpi(Integer.valueOf(this.jTextField1.getText())));
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        new PanelCliente(this.parent,true,"Nuevo Cliente").setVisible(true);
+        
+        new PanelCliente(this.parent, true, "Nuevo Cliente").setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jComboBox2PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox2PopupMenuWillBecomeInvisible
         // TODO add your handling code here:
         int id = this.jComboBox2.getSelectedIndex();
         String item = this.jComboBox2.getItemAt(id);
-        if(item=="Nuevo ..."){
-            String categoria=this.mostarMensaje("Ciudad");
-            if(categoria != null){
+        if (item == "Nuevo ...") {
+            String categoria = this.mostarMensaje("Ciudad");
+            if (categoria != null) {
                 this.ciudad.setCuidad(categoria);
                 this.jComboBox2.removeAllItems();
                 this.boxCiudad();
@@ -778,6 +782,7 @@ private DetalleAlquiler dc;
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+        this.aceptar=true;
         this.jTextField1.setEditable(false);
         this.jTextField2.setEditable(false);
         this.jComboBox2.setEnabled(false);
@@ -786,34 +791,44 @@ private DetalleAlquiler dc;
         this.jButton1.setEnabled(false);
         this.jButton2.setEnabled(false);
         this.jButton6.setEnabled(false);
-        
+
         this.jTextField3.setEditable(true);
         this.jTextField4.setEditable(true);
         this.jButton3.setEnabled(true);
         this.jButton7.setEnabled(true);
-         String fecha = this.girarFecha(this.dateChooserCombo1.getText());                                              
-       
-       int idcliente = (this.cliente.getId(Integer.valueOf(this.pcliente.getFila(0, 4).toString()))); //busca por DPI
-         
-      int index=this.jComboBox2.getSelectedIndex();
-        String ci = this.jComboBox2.getItemAt(index);       
-        this.reservacion.insertar(fecha, this.jTextField2.getText(), idcliente, this.ciudad.getId(ci),this.usr);   
-        
+        this.jButton8.setEnabled(true);
+        this.jButton4.setEnabled(true);
+        this.jButton9.setEnabled(true);
+        this.jButton10.setEnabled(true);
+        String fecha = this.girarFecha(this.dateChooserCombo1.getText());
+
+        int idcliente = (this.cliente.getId(Integer.valueOf(this.pcliente.getFila(0, 4).toString()))); //busca por DPI
+
+        int index = this.jComboBox2.getSelectedIndex();
+        String ci = this.jComboBox2.getItemAt(index);
+        this.reservacion.insertar(fecha, this.jTextField2.getText(), idcliente, this.ciudad.getId(ci), this.usr);
+
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
+        this.reservacion.tota(this.reservacion.getMaxid(),this.pago);
+        JOptionPane.showMessageDialog(null,"Reservación creada correctamente",
+                        "Mensaje!", JOptionPane.INFORMATION_MESSAGE);
+        this.dispose();
+        new PanelReservacion(parent,true).setVisible(true);
+        
     }//GEN-LAST:event_jButton10ActionPerformed
 
-        private String mostarMensaje(String mensaje){
-        String name = JOptionPane.showInputDialog(this.parent, "Ingese "+mensaje);
-        if((name != null)&&(name.length()!=0)){
+    private String mostarMensaje(String mensaje) {
+        String name = JOptionPane.showInputDialog(this.parent, "Ingese " + mensaje);
+        if ((name != null) && (name.length() != 0)) {
             return name;
-        }else{
-        return null;
+        } else {
+            return null;
         }
     }
-    
+
     /**
      * @param args the command line arguments
      */
