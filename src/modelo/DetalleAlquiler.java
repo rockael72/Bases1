@@ -29,4 +29,6 @@ public class DetalleAlquiler {
                 + "tblReservacion_id="+idr+" and tblMercaderia_id="+idm+" and precio="+precio+" and cantidad="+cantidad+"");
         
     }
+    
+    
 }

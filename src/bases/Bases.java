@@ -27,20 +27,9 @@ public class Bases {
      */
     public static void main(String[] args){
         // TODO code application logic here
-/*        Conexion c= new Conexion();
-        c.conexion();
-       // c.ejecutar("insert into MyGuests (firstname,lastname) values ('orejas','lobo')");
-        ResultSet resultado=c.consulta("select * from MyGuests");
-        try{
-        while(resultado.next()){
-            System.out.println("Nombre: "+resultado.getString("firstname")+" Apellido: "+resultado.getString("lastname"));
-        }
-        }catch(SQLException e){
-            System.out.println("Error en consulta " +e.getMessage());
-        }*/
  UIManager.put("nimbusBase",  new Color(51,98,140));// sombras menu
 UIManager.put("nimbusBlueGrey", new Color(214,217,223)); // barras de menu
- UIManager.put("control", new Color(237,238,240)); // frame
+ UIManager.put("control", new Color(230,233,236));//(237,238,240)); // frame
  // 247,248,250
     
  // "Nimbus"

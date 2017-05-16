@@ -145,8 +145,13 @@ public class PanelProducto extends javax.swing.JDialog {
         jTextField2 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Producto");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jButton1.setText("Insertar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -223,7 +228,12 @@ public class PanelProducto extends javax.swing.JDialog {
             }
         });
 
-        jButton2.setText("Cancelar");
+        jButton2.setText("Regresar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Alquiler Q");
 
@@ -406,7 +416,7 @@ public class PanelProducto extends javax.swing.JDialog {
             id = this.jComboBox5.getSelectedIndex();
             int idtam= this.tamanio.getId(this.jComboBox5.getItemAt(id));;
             this.mercaderia.insertar(this.jTextField1.getText(), Float.valueOf(this.jTextField2.getText()), idc, idt, idm, idco, idtam);
-            this.dispose();
+
             
             JOptionPane.showMessageDialog(null,"Datos guardados correctamente",
                         "Mensaje!", JOptionPane.INFORMATION_MESSAGE);
@@ -425,6 +435,32 @@ public class PanelProducto extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        this.salir();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        this.salir();
+    }//GEN-LAST:event_formWindowClosing
+
+    
+    private void salir(){
+        if(this.verificar()==true){
+            int n = JOptionPane.showConfirmDialog(
+             this,
+             "Esta seguro de salir \n"+
+             "Datos no Guardados se perderan",
+             "Salir",
+              JOptionPane.YES_NO_OPTION);
+                    if (n==0){
+                        this.dispose();
+                    }
+        }else{
+            this.dispose();
+        }
+    }
     private boolean verificar(){
          boolean verificar = false;
         String aux = jTextField1.getText().trim(); 

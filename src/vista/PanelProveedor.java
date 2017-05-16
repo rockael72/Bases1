@@ -69,6 +69,11 @@ public class PanelProveedor extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Proveedor");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setText("Nombre");
 
@@ -260,9 +265,29 @@ public class PanelProveedor extends javax.swing.JDialog {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        this.salir();
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        this.salir();
+    }//GEN-LAST:event_formWindowClosing
+
+    private void salir(){
+        if(this.verficarJtext()==true){
+            int n = JOptionPane.showConfirmDialog(
+             this,
+             "Esta seguro de salir \n"+
+             "Datos no Guardados se perderan",
+             "Salir",
+              JOptionPane.YES_NO_OPTION);
+                    if (n==0){
+                        this.dispose();
+                    }
+        }else{
+            this.dispose();
+        }
+    }
       private boolean verficarJtext(){
         boolean verificar = false;
         String aux = jTextField1.getText().trim(); 

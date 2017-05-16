@@ -45,6 +45,7 @@ public class PanelCompras extends javax.swing.JDialog {
     public PanelCompras(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.jLabel6.setText("");
         this.setLocationRelativeTo(null);
         this.parent=parent;
         this.compra= new Compras();
@@ -86,7 +87,8 @@ public class PanelCompras extends javax.swing.JDialog {
                  if(pProveedor.getSelect()!=null){
             Object[] elegido = pProveedor.getSelect();
             int id = proveedores.getId(elegido[1].toString(), elegido[2].toString(), elegido[3].toString());
-            jTextField1.setText(Integer.toString(id));        
+            jTextField1.setText(Integer.toString(id)); 
+            
             }
                  }
 
@@ -114,14 +116,15 @@ public class PanelCompras extends javax.swing.JDialog {
             public void mouseClicked(MouseEvent me) {
                  if(pMaterial.getSelect()!=null){
             datos = pMaterial.getSelect();  
-            
+            jButton7.setEnabled(true);
         }
             }
 
             @Override
             public void mousePressed(MouseEvent me) {
                  if(pMaterial.getSelect()!=null){
-            datos = pMaterial.getSelect();                                  
+            datos = pMaterial.getSelect();
+            jButton7.setEnabled(true);
         }
             }
 
@@ -203,11 +206,20 @@ public class PanelCompras extends javax.swing.JDialog {
             .addGap(0, 131, Short.MAX_VALUE)
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Compras");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jButton1.setText("Guardar");
+        jButton1.setEnabled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -357,7 +369,7 @@ public class PanelCompras extends javax.swing.JDialog {
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(64, 64, 64)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel7Layout.createSequentialGroup()
@@ -372,9 +384,9 @@ public class PanelCompras extends javax.swing.JDialog {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                        .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton7)
                     .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -426,6 +438,7 @@ public class PanelCompras extends javax.swing.JDialog {
         );
 
         jButton8.setText("Eliminar");
+        jButton8.setEnabled(false);
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
@@ -433,6 +446,7 @@ public class PanelCompras extends javax.swing.JDialog {
         });
 
         jButton9.setText("Nuevo");
+        jButton9.setEnabled(false);
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton9ActionPerformed(evt);
@@ -497,9 +511,9 @@ public class PanelCompras extends javax.swing.JDialog {
                                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -583,9 +597,24 @@ public class PanelCompras extends javax.swing.JDialog {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        this.salir();
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void salir(){
+        if(this.jTextField1.getText().trim().length()==0){
+            this.dispose();
+        }else{
+            int n = JOptionPane.showConfirmDialog(
+             this,
+             "Esta seguro de salir \n"+
+             "Datos no Guardados se perderan",
+             "Salir",
+              JOptionPane.YES_NO_OPTION);
+                    if (n==0){
+                        this.dispose();
+                    }
+        }
+    }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
          String aux = jTextField2.getText().trim(); 
@@ -606,7 +635,11 @@ public class PanelCompras extends javax.swing.JDialog {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        PanelProveedor pp = new PanelProveedor(this.parent,true, "Nuevo Proveedor");
+       this.mostrar();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void mostrar(){
+         PanelProveedor pp = new PanelProveedor(this.parent,true, "Nuevo Proveedor");
         pp.ocultarNuevo();
         pp.setVisible(true); 
         if(pp.getInsertado()==true){
@@ -614,8 +647,7 @@ public class PanelCompras extends javax.swing.JDialog {
         this.jTextField1.setText(Integer.toString(id));    
         this.mostrarProveedor();
         }
-    }//GEN-LAST:event_jButton6ActionPerformed
-
+    }
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
          this.pProveedor.generarTabla(this.proveedores.getAll());     
@@ -636,6 +668,7 @@ public class PanelCompras extends javax.swing.JDialog {
         // TODO add your handling code here:
         String aux = jTextField1.getText().trim(); 
         if (aux.length() > 0){
+            this.mostrarProveedor();
             this.jTextField1.setEditable(false);
             this.pProveedor.setEnabled(false);
             this.jPanel8.setEnabled(false);
@@ -643,13 +676,13 @@ public class PanelCompras extends javax.swing.JDialog {
             this.jButton4.setEnabled(false);
             this.jButton6.setEnabled(false);
             this.jButton12.setEnabled(false);
-            this.pProveedor.jTable1.setEnabled(false);
-            this.jButton7.setEnabled(true);
+            this.pProveedor.jTable1.setEnabled(false);            
             this.jButton5.setEnabled(true);
             this.jButton2.setEnabled(true);
             this.jTextField2.setEditable(true);
             this.jTextField4.setEditable(true);
             this.jTextField3.setEditable(true);
+            this.jButton9.setEnabled(true);
             
         }else{
              String msj="Debe ingresar codigo de proveedor";
@@ -676,6 +709,7 @@ public class PanelCompras extends javax.swing.JDialog {
             total[this.datos.length]=Integer.valueOf(this.jTextField3.getText());
             total[this.datos.length+1]=Float.valueOf(this.jTextField4.getText());  
             total[0]=this.cont;
+            this.jButton7.setEnabled(false);
             }catch(Exception e){
                 String msj="Canitdad y Precio deben ser valores numéricos";
             JOptionPane.showMessageDialog(null, msj , "Error", JOptionPane.ERROR_MESSAGE);
@@ -709,9 +743,31 @@ public class PanelCompras extends javax.swing.JDialog {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
-        this.dispose();
-        new PanelCompras(this.parent,true).setVisible(true);
+          
+            int n = JOptionPane.showConfirmDialog(
+             this,
+             "Esta seguro de salir \n"+
+             "Datos no Guardados se perderan",
+             "Salir",
+              JOptionPane.YES_NO_OPTION);
+                    if (n==0){
+                        this.dispose();
+                        new PanelCompras(this.parent,true).setVisible(true);
+                    }
+        
+        
+        
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+         this.salir();
+    }//GEN-LAST:event_formWindowClosing
 
     private boolean verificarMercaderia(){
         boolean verificar = false;

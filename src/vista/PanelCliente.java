@@ -64,9 +64,14 @@ public class PanelCliente extends javax.swing.JDialog {
         jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Cliente");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel4.setBackground(new java.awt.Color(226, 226, 226));
         jPanel4.setForeground(new java.awt.Color(1, 1, 1));
@@ -264,6 +269,8 @@ public class PanelCliente extends javax.swing.JDialog {
         if(this.editar==false){
         try{ 
         // insertar un nuevo cliente
+        int dpi=cliente.verificarDPI(Integer.valueOf(this.jTextField5.getText()));
+        if(dpi==-1){
         this.cliente.crearCliente(Integer.valueOf(this.jTextField6.getText()), this.jTextField1.getText()
                 , this.jTextField2.getText(), this.jTextField3.getText(), 
                 Integer.valueOf(this.jTextField5.getText()), this.jTextField4.getText());
@@ -271,6 +278,12 @@ public class PanelCliente extends javax.swing.JDialog {
                 this.mensaje=false;
                 JOptionPane.showMessageDialog(null,"Datos guardados correctamente",
                         "Mensaje!", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+              String nl= System.getProperty("line.separator");
+            // String msj="Error: "+ nl +"Debe de llenar todos los campos";
+            String msj = "DPI Ingresado ya existe" ;                   
+            JOptionPane.showMessageDialog(null, msj , "Error", JOptionPane.ERROR_MESSAGE);
+        }
  
         }catch(Exception e){
             String nl= System.getProperty("line.separator");
@@ -283,6 +296,8 @@ public class PanelCliente extends javax.swing.JDialog {
             }else{
             // modificar un cliente 
             try{
+                 int dpi=cliente.verificarDPI(Integer.valueOf(this.jTextField5.getText()));
+        if(dpi==-1){
             this.cliente.modificarCliente(this.clienteId, Integer.valueOf(this.jTextField6.getText()), this.jTextField1.getText()
                 , this.jTextField2.getText(), this.jTextField3.getText(), 
                 Integer.valueOf(this.jTextField5.getText()), this.jTextField4.getText());
@@ -290,6 +305,12 @@ public class PanelCliente extends javax.swing.JDialog {
             this.mensaje=false;
             JOptionPane.showMessageDialog(null,"Datos modificados correctamente",
                         "Mensaje!", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+              String nl= System.getProperty("line.separator");
+            // String msj="Error: "+ nl +"Debe de llenar todos los campos";
+            String msj = "DPI Ingresado ya existe" ;                   
+            JOptionPane.showMessageDialog(null, msj , "Error", JOptionPane.ERROR_MESSAGE);
+        }
             }catch(Exception e){
                 String nl= System.getProperty("line.separator");
             // String msj="Error: "+ nl +"Debe de llenar todos los campos";
@@ -397,9 +418,29 @@ public class PanelCliente extends javax.swing.JDialog {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        this.hide();
+        this.salir();
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        this.salir();
+    }//GEN-LAST:event_formWindowClosing
+
+    private void salir(){
+    if(this.verficarJtext()==true){
+        int n = JOptionPane.showConfirmDialog(
+             this,
+             "Esta seguro de salir \n"+
+             "Datos no Guardados se perderan",
+             "Salir",
+              JOptionPane.YES_NO_OPTION);
+                    if (n==0){
+                        this.dispose();
+                    }
+    }else{
+        this.dispose();
+    }
+}
     /**
      * @param args the command line arguments
      */

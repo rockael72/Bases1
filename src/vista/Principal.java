@@ -5,13 +5,41 @@
  */
 package vista;
 
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
+import com.toedter.calendar.JDateChooser;
+import controlador.Conexion;
+import datechooser.beans.DateChooserCombo;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+import modelo.Consultas;
+import modelo.Fecha;
 import modelo.Usuario;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
@@ -26,25 +54,68 @@ public class Principal extends javax.swing.JFrame {
      * Creates new form Principal
      */
     
-    private PanelConsultas pc;
+    private PanelConsultas pxEntregar;
+    private PanelConsultas pMercaderia;
+    private PanelConsultas pCobrar;
     private int idusr;
-    
+    private Consultas c;
+    private Fecha f;
+    private Usuario u;
+    private final String fActual ;
     public Principal(int id, String nombre) {
         initComponents();
-         String[] columnNames = {"id",
-                        "Nombre",
-                        "Usuario",
-                        "Contrasenia",
-                        "Administrador"};
+       
         //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        Usuario us = new Usuario();
-        this.pc= new PanelConsultas();
-        this.pc.generarTabla(us.usuario());
-        this.jPanel2.setLayout(new BorderLayout());
-        this.jPanel2.add(pc);
-        this.pc.setVisible(true);
+        this.c=new Consultas();
+        this.u=new Usuario();
+        this.fActual=this.dateChooserCombo1.getText();
+        this.pxEntregar= new PanelConsultas();     
+        this.pMercaderia= new PanelConsultas();
+        this.pCobrar=new PanelConsultas();
+        this.jPanel2.setLayout(new BorderLayout()); 
+        this.jPanel2.add(this.pMercaderia);        
+        this.jPanel2.add(this.pCobrar);
+        this.jPanel2.add(this.pxEntregar);
         this.jLabel3.setText("Usuario: "+nombre);
-        this.idusr=id;
+        this.idusr=id;        
+        
+        this.f = new Fecha(this.dateChooserCombo1.getText());
+        this.rxentregar();
+        this.verificar();
+    }
+    
+    private void verificar(){
+        if(this.u.getTipo(this.idusr).equals("0")){
+            this.jMenuItem1.setVisible(false);
+            this.jMenuItem5.setVisible(false);
+            this.jMenuItem6.setVisible(false);
+            this.jMenuItem7.setVisible(false);
+            this.jMenuItem14.setVisible(false);
+            this.jMenuItem11.setVisible(false);
+            this.jMenuItem3.setVisible(false);
+            
+        }
+            
+    }
+
+    public void rxentregar(){
+        String fecha = this.girarFecha(this.dateChooserCombo1.getText());
+        this.pxEntregar.generarTabla(this.c.rxEntregar(fecha));
+    }
+    
+    private String girarFecha(String fecha) {
+        String[] fecha2 = {"", "", ""};
+        int cont = 0;
+        for (int i = 0; i < fecha.length(); i++) {
+
+            if (fecha.charAt(i) != '/') {
+                fecha2[cont] += fecha.charAt(i);
+            } else {
+                cont++;
+            }
+        }
+        fecha = fecha2[2] + "/" + fecha2[1] + "/" + fecha2[0];
+        return fecha;
     }
 
     /**
@@ -66,9 +137,9 @@ public class Principal extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jButton4 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         panelCurves1 = new org.edisoncor.gui.panel.PanelCurves();
@@ -84,6 +155,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem17 = new javax.swing.JMenuItem();
@@ -109,10 +181,13 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(218, 218, 218));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/deshacer.png"))); // NOI18N
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
-        jButton1.setBackground(new java.awt.Color(218, 218, 218));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/flecha-derecha.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -162,13 +237,17 @@ public class Principal extends javax.swing.JFrame {
                 false,
                 true)));
     dateChooserCombo1.setAutoScroll(false);
-    dateChooserCombo1.setCalendarBackground(new java.awt.Color(254, 254, 254));
+    dateChooserCombo1.setFormat(2);
     dateChooserCombo1.setFieldFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+    dateChooserCombo1.setBehavior(datechooser.model.multiple.MultyModelBehavior.SELECT_SINGLE);
 
-    jButton2.setBackground(new java.awt.Color(218, 218, 218));
     jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/flecha-hacia-la-izquierda.png"))); // NOI18N
+    jButton2.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton2ActionPerformed(evt);
+        }
+    });
 
-    jButton6.setBackground(new java.awt.Color(218, 218, 218));
     jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/salida.png"))); // NOI18N
     jButton6.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,7 +255,6 @@ public class Principal extends javax.swing.JFrame {
         }
     });
 
-    jButton5.setBackground(new java.awt.Color(218, 218, 218));
     jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/boton-de-apagado.png"))); // NOI18N
     jButton5.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -189,22 +267,31 @@ public class Principal extends javax.swing.JFrame {
     jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
     jComboBox1.setBackground(new java.awt.Color(254, 254, 254));
-    jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pedidos", "Disponible" }));
+    jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Reservaciones por entregar", "Reservaciones por cobrar", "Mercadería disponible" }));
 
-    jLabel2.setText("Mostrar");
+    jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Día", "Mes", "Año" }));
 
-    jTextField1.setBackground(new java.awt.Color(254, 254, 254));
-    jTextField1.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+    jButton4.setText("Mostrar");
+    jButton4.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton4ActionPerformed(evt);
+        }
+    });
 
-    jLabel1.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-    jLabel1.setText("Buscar");
+    jButton7.setText("Imprimir");
+    jButton7.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton7ActionPerformed(evt);
+        }
+    });
 
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
     jPanel1Layout.setHorizontalGroup(
         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jPanel1Layout.createSequentialGroup()
-            .addContainerGap()
+            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jButton2)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -212,15 +299,13 @@ public class Principal extends javax.swing.JFrame {
             .addComponent(jButton1)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jButton3)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jLabel2)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(45, 45, 45)
+            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(jButton4)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel1)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jButton7)
+            .addGap(66, 66, 66)
             .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jButton6)
@@ -236,19 +321,25 @@ public class Principal extends javax.swing.JFrame {
         .addComponent(jSeparator2)
         .addGroup(jPanel1Layout.createSequentialGroup()
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(dateChooserCombo1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)))
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(5, 5, 5)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton4)
+                            .addComponent(jButton7))
+                        .addComponent(jButton3)
+                        .addComponent(jButton1)
+                        .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton2)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING))))
+            .addContainerGap())
     );
 
     javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -259,7 +350,7 @@ public class Principal extends javax.swing.JFrame {
     );
     jPanel2Layout.setVerticalGroup(
         jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 569, Short.MAX_VALUE)
+        .addGap(0, 545, Short.MAX_VALUE)
     );
 
     jPanel4.setBackground(new java.awt.Color(86, 147, 255));
@@ -367,6 +458,10 @@ public class Principal extends javax.swing.JFrame {
     });
     jMenu2.add(jMenuItem14);
 
+    jMenuItem11.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+    jMenuItem11.setText("Mercadería");
+    jMenu2.add(jMenuItem11);
+
     jMenuItem3.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
     jMenuItem3.setText("Permisos Usuario");
     jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -391,15 +486,21 @@ public class Principal extends javax.swing.JFrame {
     jMenu3.add(jMenuItem17);
 
     jMenuItem8.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-    jMenuItem8.setText("Modificar Rerservacion");
+    jMenuItem8.setText("Gestión Rerservacion");
+    jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jMenuItem8ActionPerformed(evt);
+        }
+    });
     jMenu3.add(jMenuItem8);
 
     jMenuBar1.add(jMenu3);
 
-    jMenu4.setText("Usuairo");
+    jMenu4.setText("Usuario");
     jMenu4.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
 
-    jMenuItem9.setText("Cambiar Contraseña");
+    jMenuItem9.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+    jMenuItem9.setText("Editar Usuario");
     jMenu4.add(jMenuItem9);
 
     jMenuBar1.add(jMenu4);
@@ -421,7 +522,7 @@ public class Principal extends javax.swing.JFrame {
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -445,7 +546,23 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_formAncestorResized
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+                        
+            String fecha="";
+            int seleccion=this.jComboBox2.getSelectedIndex();
+            if(seleccion==0)
+               fecha=this.f.fechaMas();                 
+            if(seleccion==1)
+                fecha=this.f.mesMas();
+            if(seleccion==2)
+                fecha=this.f.anioMas();
+        for(int i=0;i<2;i++){
+        this.dateChooserCombo1.setSelectedDate(this.f.retornaCalendar(fecha));
+        this.dateChooserCombo1.getSelectedDate().setTime(this.f.retornaDate(fecha));                
+        }
+        this.rxentregar();
         // TODO add your handling code here:
+        
+        //this.dateChooserCombo1.setSelectedDate(aDate);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -512,6 +629,94 @@ public class Principal extends javax.swing.JFrame {
         new Mproveedor(this,true).setVisible(true);
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+        new PanelGestion(this,true).setVisible(true);
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+        String fecha ="";
+        int seleccion=this.jComboBox2.getSelectedIndex();
+        
+        if(seleccion==0)
+        fecha=this.f.fechaMenos();               
+        
+        if(seleccion==1)
+            fecha=this.f.mesMenos();
+        
+        if(seleccion==2)
+            fecha=this.f.anioMenos();
+        
+        for(int i=0;i<2;i++){
+        this.dateChooserCombo1.setSelectedDate(this.f.retornaCalendar(fecha));
+        this.dateChooserCombo1.getSelectedDate().setTime(this.f.retornaDate(fecha)); 
+        }
+        
+        this.rxentregar();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        int select=this.jComboBox1.getSelectedIndex();
+        if (select==0){
+            this.pxEntregar.setVisible(true);            
+            this.pMercaderia.setVisible(false);
+            this.pCobrar.setVisible(false);
+        }
+        if(select==1){
+            this.pxEntregar.setVisible(false);            
+            this.pMercaderia.setVisible(false);
+            this.pCobrar.setVisible(true);
+            this.pCobrar.generarTabla(this.c.tCobrar());
+            this.pCobrar.setSize(this.pxEntregar.getSize());
+        }
+        if(select==2){                      
+            this.pxEntregar.setVisible(false);
+            this.pCobrar.setVisible(false);
+            this.pMercaderia.setVisible(true);
+            this.pMercaderia.generarTabla(this.c.tMercaderia());
+            this.pMercaderia.setSize(this.pxEntregar.getSize());
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        this.f.setActual();
+        String fecha=f.getActual();
+        for(int i=0;i<2;i++){
+        this.dateChooserCombo1.setSelectedDate(this.f.retornaCalendar(fecha));
+        this.dateChooserCombo1.getSelectedDate().setTime(this.f.retornaDate(fecha));
+        }
+        this.rxentregar();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        
+        Conexion c= new Conexion();
+        c.conexion();
+        String path="";
+        if(this.jComboBox1.getSelectedIndex()==0)
+        path ="src\\reportes\\report1.jasper";
+        if(this.jComboBox1.getSelectedIndex()==1)
+        path ="src\\reportes\\porCobrar.jasper";    
+        JasperReport jr=null;               
+        try {
+            jr=(JasperReport) JRLoader.loadObjectFromFile(path);
+            JasperPrint jp= JasperFillManager.fillReport(jr,null, c.getConexion());
+            JasperViewer jv=new JasperViewer(jp,false);
+            jv.setLocationRelativeTo(null);
+            jv.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            System.out.println(jv.getDefaultCloseOperation());
+            jv.setVisible(true);
+            jv.setTitle("prueba");                 
+        } catch (JRException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -552,11 +757,12 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -564,6 +770,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem2;
@@ -580,7 +787,10 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField jTextField1;
     private org.edisoncor.gui.panel.PanelCurves panelCurves1;
     // End of variables declaration//GEN-END:variables
+
+    private void TableModelData() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

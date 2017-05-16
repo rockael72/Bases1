@@ -165,4 +165,30 @@ public class Cliente {
         }
         return t;        
     }
+    
+    public int verificarDPI(int dpi){
+        ResultSet dp=this.conexion.consulta("Select DPI from tblCliente where DPI = "+dpi);
+        int dpe=-1;
+        try{
+            while(dp.next()){
+                dpe=Integer.valueOf(dp.getString("DPI"));
+            }
+        }catch(SQLException e){
+            
+        }
+        return dpe;
+    }
+    
+    public int verificarID(int id){
+        ResultSet dp=this.conexion.consulta("Select id from tblCliente where id = "+id);
+        int dpe=-1;
+        try{
+            while(dp.next()){
+                dpe=Integer.valueOf(dp.getString("id"));
+            }
+        }catch(SQLException e){
+            
+        }
+        return dpe;
+    }
 }

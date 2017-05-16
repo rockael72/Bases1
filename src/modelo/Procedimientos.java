@@ -26,5 +26,11 @@ public class Procedimientos {
          return procedimiento;
     }
     
+    public ResultSet getProcedimientoV(int id){
+         ResultSet procedimiento = this.conexion.consulta
+                            ("call detalleR("+id+")");
+         return procedimiento;
+    }
+    
     
 }

@@ -5,7 +5,6 @@
  */
 package vista;
 
-import UpperEssential.UpperEssentialLookAndFeel;
 import controlador.Conexion;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;

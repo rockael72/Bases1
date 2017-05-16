@@ -5,7 +5,7 @@
  */
 package vista;
 
-import static com.sun.xml.internal.fastinfoset.alphabet.BuiltInRestrictedAlphabets.table;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
