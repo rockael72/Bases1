@@ -30,10 +30,10 @@ public class Consultas {
 "inner join tblUsuario\n" +
 "on tblUsuario.id=tblReservacion.tblUsuario_id\n" +
 "inner join tblTelefono\n" +
-"on tblCliente.id=tblTelefono.tblCliente_id\n" +
-"where tblReservacion.Activo=true and FechaR > '"+fecha+"' and FechaF is null  and Anulado=false \n" +
-"group by tblReservacion.id\n" +
-"order by tblReservacion.FechaR;");
+"on tblCliente.id=tblTelefono.tblCliente_id\n" );//+
+//"where tblReservacion.Activo=true and tblReservacion.FechaR > '"+fecha+"' and Anulado=false \n");// +
+/*"group by tblReservacion.id\n" +
+"order by tblReservacion.FechaR;");*/
         return rxE;
         
     }
@@ -54,7 +54,7 @@ public class Consultas {
     
     
     public ResultSet tCobrar(){
-        return this.conexion.consulta("select tblUsuario.Nombre, tblCliente.Nombre, tblCliente.Apellido,\n" +
+       return this.conexion.consulta("select tblUsuario.Nombre, tblCliente.Nombre, tblCliente.Apellido,\n" +
 "tblCliente.DPI, tblTelefono.Telefono,\n" +
 "tblReservacion.Direccion, tblReservacion.FechaR, Saldo, Total\n" +
 "from tblCliente\n" +
@@ -63,7 +63,7 @@ public class Consultas {
 "inner join tblUsuario\n" +
 "on tblUsuario.id=tblReservacion.tblUsuario_id\n" +
 "inner join tblTelefono\n" +
-"on tblCliente.id=tblTelefono.tblCliente_id\n" +
-"where Total>Saldo and tblReservacion.Anulado = false;");
+"on tblCliente.id=tblTelefono.tblCliente_id\n");
+//"where tblReservacion.Total>tblReservacion.Saldo");// and tblReservacion.Anulado = false");
     }
 }
