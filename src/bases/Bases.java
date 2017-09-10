@@ -9,8 +9,11 @@ import com.sun.javafx.tk.Toolkit;
 import controlador.Conexion;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -43,13 +46,15 @@ UIManager.put("nimbusBlueGrey", new Color(214,217,223)); // barras de menu
 } catch (Exception e) {
     // If Nimbus is not available, you can set the GUI to another look and feel.
 }
-
+  
    Login p= new Login();
   
    p.setVisible(true);  
     p.setLocationRelativeTo(null);
     
-     
+    // ExecutorService executor = Executors.newCachedThreadPool();     
+     //executor.execute(new ThreadVerificar());
+
 
     }
     

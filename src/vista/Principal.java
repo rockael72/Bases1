@@ -5,6 +5,8 @@
  */
 package vista;
 
+import archivo.ArchivoTexto;
+import bases.ThreadVerificar;
 import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import com.toedter.calendar.JDateChooser;
 import controlador.Conexion;
@@ -22,6 +24,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -54,6 +58,7 @@ public class Principal extends javax.swing.JFrame {
      * Creates new form Principal
      */
     
+    public static ArchivoTexto archivo ;
     private PanelConsultas pxEntregar;
     private PanelConsultas pMercaderia;
     private PanelConsultas pCobrar;
@@ -64,8 +69,9 @@ public class Principal extends javax.swing.JFrame {
     private final String fActual ;
     public Principal(int id, String nombre) {
         initComponents();
-       
-        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        archivo = new ArchivoTexto();        
+        archivo.insertar("-------------------------------");
+        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);        
         this.c=new Consultas();
         this.u=new Usuario();
         this.fActual=this.dateChooserCombo1.getText();
@@ -604,7 +610,13 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
-        new PanelProducto(this,true).setVisible(true);
+        PanelProducto p = new PanelProducto(this,true);        
+        ThreadVerificar tv = new ThreadVerificar(p);
+       ExecutorService executor = Executors.newCachedThreadPool();            
+     executor.execute(tv);     
+     p.setVisible(true);
+     tv.detener();
+        
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed

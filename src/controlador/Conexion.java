@@ -18,16 +18,16 @@ import java.sql.Statement;
 public class Conexion {
 
     private static Connection conexion = null;
-    private String url = "jdbc:mysql://192.168.56.1:3306/bdAlquiler";
+    private String url = "jdbc:mysql://localhost/bdAlquiler";
     //private String url = "jdbc:mysql://localhost:3306/bdAlquiler";
     //private String pass = "ServifiestasEstuardO";
  //   private String pass = "Daniel16";
     //private String usr = "root";
-    private String pass = "";
-    private String usr = "Alquiler";
+    private String pass = "123";
+    private String usr = "root";
+    private Statement sentencia;
 
     public Connection conexion() {
-        System.out.println("hola");
         try {
             Class.forName("com.mysql.jdbc.Driver");
             this.conexion = (Connection) DriverManager.getConnection(url, usr, pass);
@@ -38,6 +38,17 @@ public class Conexion {
         }
         return this.conexion;
     }
+    
+    public boolean verificar(){                           
+        if (this.conexion()!=null){
+            System.out.println("se ha conectado");
+            return true;
+            
+        }else{
+            System.out.println("se ha desconectado");
+            return false;
+        }                
+    }
 
     public Connection getConexion() {
         return conexion;
@@ -46,6 +57,44 @@ public class Conexion {
     public void setConexion(Connection conexion) {
         this.conexion = conexion;
     }
+    
+    public void transaccion(){
+       try{
+        this.sentencia = this.conexion().createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+        this.enTransaccion("start transaction;");        
+        }catch(SQLException e){
+            
+        }
+    }
+    
+    public void rollback(){
+        try{        
+        this.enTransaccion("rollback");      
+        this.sentencia.close();
+        }catch(SQLException e){            
+        }
+        
+    }
+    
+    public void commit(){
+        try{        
+        this.enTransaccion("commit");      
+        this.sentencia.close();
+        }catch(SQLException e){
+            
+        }
+    }
+    
+    public boolean enTransaccion(String sql){
+        try{            
+            this.sentencia.executeUpdate(sql);                    
+        }catch(SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    
 
     public boolean ejecutar(String sql) {
         try {

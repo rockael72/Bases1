@@ -1,0 +1,22 @@
+-------------------------------
+Transaccion-1
+Estado: Abortada
+ 
+Transaccion-2
+Estado: Abortada
+    insert into tblMercaderia(Nombre,Precio, tblCategoria_id, tblTipo_id, tblMaterial_id, tblColor_id, tblTamanio_id)values ('dsaf','213.0',1,1,1,1,1)
+    insert into tblMercaderia(Nombre,Precio, tblCategoria_id, tblTipo_id, tblMaterial_id, tblColor_id, tblTamanio_id)values ('dsaf','213.0',1,1,1,1,1)
+    insert into tblMercaderia(Nombre,Precio, tblCategoria_id, tblTipo_id, tblMaterial_id, tblColor_id, tblTamanio_id)values ('dsaf','213.0',1,1,1,1,1)
+ 
+-------------------------------
+-------------------------------
+Transaccion-1
+Estado: Abortada
+ 
+
+-------------------------------
+-------------------------------
+Transaccion-1
+Estado: Abortada
+    insert into tblMercaderia(Nombre,Precio, tblCategoria_id, tblTipo_id, tblMaterial_id, tblColor_id, tblTamanio_id)values ('esta prueba','23.0',1,1,1,1,1)
+ 
